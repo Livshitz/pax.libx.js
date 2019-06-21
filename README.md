@@ -1,35 +1,19 @@
 # Libx.js 
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
-[![npm](https://img.shields.io/npm/v/libx.js.svg?maxAge=1000)](https://www.npmjs.com/package/libx.js)
+[![npm](https://img.shields.io/npm/v/pax.libx.js.svg?maxAge=1000)](https://www.npmjs.com/package/pax.libx.js)
 [![CircleCI](https://circleci.com/gh/Livshitz/libx.fuser/tree/master.svg?style=shield)](https://circleci.com/gh/Livshitz/libx.fuser)
-[![npm](https://img.shields.io/bundlephobia/minzip/libx.js.svg?style=plastic)](https://www.npmjs.com/package/libx.js)
-[![npm](https://img.shields.io/bundlephobia/min/libx.js.svg?style=plastic)](https://www.npmjs.com/package/libx.js)
-[![npm](https://img.shields.io/github/languages/code-size/livshitz/libx.js.svg?label=source%20code%20size)](https://www.github.com/livshitz/libx.js)
+[![npm](https://img.shields.io/bundlephobia/minzip/pax.libx.js.svg?style=plastic)](https://www.npmjs.com/package/pax.libx.js)
+[![npm](https://img.shields.io/bundlephobia/min/pax.libx.js.svg?style=plastic)](https://www.npmjs.com/package/pax.libx.js)
+[![npm](https://img.shields.io/github/languages/code-size/livshitz/pax.libx.js.svg?label=source%20code%20size)](https://www.github.com/livshitz/pax.libx.js)
 
-> 🛠 pax.libx.js is a carefully crafted toolbelt full of useful modules and helpers for node & web apps
+> 🛠 pax.libx.js is lightweight and flexible packagin, bundling and building tool for modern web technologies
 
 ## Features: 
-* Heavily modular and flexible
-* Browserify & bundler friendly
-* Shared support:
-  * Dependency Injection
-  * General helpers & extensions
-  * Firebase wrapper
-  * Log
-  * Network
-  * Callbacks
-  * Crypto related helpers
-* Browser-only support:
-  * General helpers & extensions
-  * Require (for browser)
-  * User management (firebase)
-* Node-only support:
-  * CLI helpers
-  * Bundler - Watcher, bundler, transformer, and more
+* [TBS]
 
 ## Description:
-Different projects usually have a shared portion of infrastructural or helpers code. Libx.js is intended to bring a broad of useful tools, shaped and sharpened to be easily used, hiding the complex or troublesome routines usually needed. <br/>
+[TBS]<br/>
 
 
 ## Usage
