@@ -7,7 +7,7 @@
 [![npm](https://img.shields.io/bundlephobia/min/pax.libx.js.svg?style=plastic)](https://www.npmjs.com/package/pax.libx.js)
 [![npm](https://img.shields.io/github/languages/code-size/livshitz/pax.libx.js.svg?label=source%20code%20size)](https://www.github.com/livshitz/pax.libx.js)
 
-> 🛠 pax.libx.js is lightweight and flexible packagin, bundling and building tool for modern web technologies
+> 🛠 pax.libx.js is lightweight and flexible packaging, bundling and building tool for modern web technologies
 
 ## Features: 
 * [TBS]
