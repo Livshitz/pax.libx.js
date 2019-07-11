@@ -66,7 +66,7 @@ module.exports = (function(){
 	mod.middlewares.minify = (options) => streamify(minify(libx.extend({ mangle: false, builtIns: false }, options)));
 	mod.middlewares.renameFunc = (func) => rename(func);
 	mod.middlewares.rename = (to) => rename(to);
-	mod.middlewares.babelify = () => gulpBabel({ presets: ['es2015'] });
+	mod.middlewares.babelify = () => gulpBabel({ presets: ['@babel/preset-env'] });
 	mod.middlewares.if = (condition, middlewareAction) => gulpif(condition, middlewareAction);
 	mod.middlewares.ifProd = (middleware) => mod.middlewares.if(mod.config.isProd, middleware);
 	mod.middlewares.sourcemaps = sourcemaps;
@@ -177,9 +177,9 @@ module.exports = (function(){
 						.pipe(gulp.dest(options.sourcemapDest));
 				} else { 
 					// Just rename:
-					// chunk.contents.pipe(source(chunk.path, chunk.base))
-					// 	.pipe(rename(f=>f.extname = ".js"))
-					// 	.pipe(gulp.dest(options.sourcemapDest));
+					chunk.contents.pipe(source(chunk.path, chunk.base))
+						.pipe(rename(f=>f.extname = ".js"))
+						.pipe(gulp.dest(options.sourcemapDest));
 				}
 				return chunk;
 			}
@@ -188,11 +188,10 @@ module.exports = (function(){
 		
 		return mod.middlewares.browserify(options); 
 	}
-	mod.middlewares.browserify = (_options) => {
+	mod.middlewares.browserify = (_options = {}) => {
 		options = {
 			// entries: files,
-			
-			// bare: true, 
+			// bare: true,
 			// bundleExternal: true,
 			// target: { node: 'v10.15.3' },
 			babelify: false,
@@ -202,6 +201,7 @@ module.exports = (function(){
 			debug: false,
 			plumber: false,
 			minify: false,
+			useStream: false,
 		}
 		options.babelifyOptions = {
 			global: false,
@@ -243,16 +243,28 @@ module.exports = (function(){
 
 		var browserified = through2.obj(function(chunk, enc, callback) {
 			if(chunk.isBuffer()) {
-				options.entries = chunk.path;
+				let bundle;
+				let content;
 
-				var b = browserify(options);
+				if (!options.useStream) {
+					options.entries = chunk.path;
+				}
+				else content = intoStream(chunk.contents);
 
-				if (options.tsify) b.plugin(tsify) //, { noImplicitAny: false, target: 'es3' })
-				if (options.babelify) b.transform(babelify, options.babelifyOptions);
+				bundle = browserify(content, options);
 
-				chunk.contents = b.bundle();
-				
+				if (options.tsify) bundle.plugin(tsify, options.tsifyOptions) //, { noImplicitAny: false, target: 'es3' })
+				if (options.babelify) bundle.transform(babelify, options.babelifyOptions);
+
+				chunk.contents = bundle.bundle();
+
 				if (options.treatChunk) options.treatChunk(chunk, options);
+
+				if (options.rename) {
+					let p = path.dirname(chunk.path);
+					let f = path.basename(chunk.path);
+					chunk.path = p + '/' + options.rename;
+				}
 
 				this.push(chunk);
 			}
@@ -431,17 +443,16 @@ module.exports = (function(){
 		var stream = gulp.src(_source, options);
 		if (options.debug == null) options.debug = mod.config.debug;
 		if (options.debug != false) stream = stream.pipe(debug())
-		
-		libx._.each(middlewares(), i=> 
-			stream = stream.pipe(i) 
+
+		libx._.each(middlewares(), i=>
+			stream = stream.pipe(i)
 		);
 
-		stream.pipe(gulp.dest(dest));
-		stream.on('error', (err) => libx.log.error('--- ERROR: --- ', err) );
-		stream.on('end', ()=> {
+		stream.pipe(gulp.dest(dest)).on('end', ()=> {
 			p.resolve(stream);
 			if (options.callback) options.callback(stream);
 		});
+		stream.on('error', (err) => libx.log.error('--- ERROR: --- ', err) );
 
 		shouldWatch = shouldWatch || false;
 		if (Array.isArray(_source)) _source = libx._.map(_source, i=> i.replace(/^(\!)?\.\//, '$1'));

@@ -5766,10 +5766,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.2.0.tgz#601c2484a51f30711f543cff8b48c3f9ffef3c45"
-  integrity sha512-DEeSsfWc1EizDXMEgvn8wQZwshM3ezcCK+XlgS3C8DYgnVYOuK5zvy5w4nXHW6XuS3eRXqWaOX1mhvo9WS1mWA==
+libx.js@^0.2.2:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.2.6.tgz#8cc58706f144df48e4d38d5f7d7544ebe2b5c60e"
+  integrity sha512-J5wNbBOjNcBQSzBh8DTvknUawNPPvcN+2oWfJQB0Dw7xUUe/+j71ig22JcszLkqWvrPzOEwXz82D0eNzAJCC8g==
   dependencies:
     buffer "^5.2.1"
     crypto-js "^3.1.9-1"
@@ -7608,7 +7608,7 @@ read-pkg@^3.0.0:
     normalize-package-data "^2.3.2"
     path-type "^3.0.0"
 
-"readable-stream@2 || 3", readable-stream@^3.1.1:
+"readable-stream@2 || 3", readable-stream@^3.1.1, readable-stream@^3.3.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.4.0.tgz#a51c26754658e0a3c21dbf59163bd45ba6f447fc"
   integrity sha512-jItXPLmrSR8jmTRmRWJXCnGJsfy85mB3Wd/uINMXA65yrnFo0cPClFIUWzo2najVNSl+mx7/4W8ttlLWJe99pQ==
