@@ -70,6 +70,7 @@ module.exports = (function(){
 	mod.middlewares.if = (condition, middlewareAction) => gulpif(condition, middlewareAction);
 	mod.middlewares.ifProd = (middleware) => mod.middlewares.if(mod.config.isProd, middleware);
 	mod.middlewares.sourcemaps = sourcemaps;
+	mod.middlewares.buffer = buffer;
 	mod.middlewares.minifyLess = () => cleanCss();
 	mod.middlewares.minifyCss = () => cleanCss();
 	mod.middlewares.concat = (filename) => concat(filename);
@@ -103,7 +104,7 @@ module.exports = (function(){
 		})
 	};
 	mod.middlewares.usemin = (base) => {
-		libx.log.verbose('usemin:', )
+		libx.log.verbose('pax.usemin: ');
 		return usemin({
 			// assetsDir: './tests/bundle/',
 			path: base, //'./tests/bundle/',
@@ -138,7 +139,8 @@ module.exports = (function(){
 			}
 		})
 	};
-	mod.middlewares.ts = (_options, tsproject) => {
+
+	mod.middlewares.ts = (_options, tsproject = null) => {
 		var options = {
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
@@ -149,10 +151,49 @@ module.exports = (function(){
 		if (options.outFile != null) {
 			options.module = "amd"
 		}
-		if (tsproject != null)
-			return tsproject(options);
-		else
+
+		if (tsproject == null)
 			return ts(options);
+		else
+			return tsproject(options);
+	}
+
+	mod.middlewares.tsAndSourcemaps = (_options, tsconfigCompilerOptions) => {
+		var options = {
+			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
+            // outFile: 'compiled.js',
+		};
+		libx.extend(options, _options);
+		if (options.outFile != null) options.module = "amd";
+
+		return through2.obj(async function(file, encoding, callback) {
+			try {
+				if (!file.isBuffer()) return;
+
+				// let stream = fs.createReadStream(file.path);
+				file.contents = intoStream(file.contents);
+				
+				file.contents
+					.pipe(source(file.path, file.base))
+					// .pipe(source(path.basename(file.path))) //getBundleName() + '.js'))
+					.pipe(buffer())
+					.pipe(sourcemaps.init({loadMaps: true}))
+					.pipe(ts(tsconfigCompilerOptions))
+					.pipe(sourcemaps.write('./'))
+					// .pipe(rename(f=>f.extname = ".js"))
+					.pipe(gulp.dest(options.dest));
+
+				this.push(file);
+			}
+			catch (ex) {
+				libx.log.e('pax.middlewares.tsAdnSourceMaps: Error: ', ex);
+				throw ex;
+			}
+			finally {
+				if (callback) callback();
+			}
+
+		});
 	}
 
 	mod.middlewares.tsify = (_options) => {
@@ -291,7 +332,7 @@ module.exports = (function(){
 			var p = (libCacheDir || './') + 'lib-cache/' + (avoidRenameFile ? dir : '');
 			// var fname = avoidRenameFile ? `${name}${ext}` : `${h}${ext}`;
 			var fname = `${name}${ext}`;
-			libx.log.v('fname: ', fname);
+			libx.log.d('pax.localize: fname= ', fname);
 			var f = p + fname;
 			if (!fs.existsSync(p)) libx.node.mkdirRecursiveSync(p);
 
@@ -302,14 +343,14 @@ module.exports = (function(){
 			}
 		
 			if (avoidCache || !fs.existsSync(f)) {
-				libx.log.v('getting: ', src, ext, h, dir);
+				libx.log.d('pax.localize: getting: ', src, ext, h, dir);
 
 				var isNetworkResource = src.startsWith("http://") || src.startsWith("https://") || src.startsWith("ftp://") || src.startsWith("//");
 
 				var handler = (data)=> {
 					if (data == null) 
 						throw `Could not find "${src}"!`;
-					libx.log.i('got data: ', data.length);
+					libx.log.d('pax.localize: got data: ', data.length);
 						
 					fs.writeFile(f, data, err=> {
 						if (err) throw 'Write: error: ', err;
@@ -331,7 +372,7 @@ module.exports = (function(){
 		}
 
 		var onFileReady = async (elm, attr, file, ext, fname, dir) => {
-			libx.log.v('onFileReady: ', file)
+			libx.log.d('pax.localize: onFileReady: ', file)
 			var type = '';
 			switch(ext) {
 				case '.js': type = 'scripts'; break;
@@ -377,7 +418,7 @@ module.exports = (function(){
 			
 				await Promise.all(p); 
 			
-				libx.log.i('all done, saving')
+				libx.log.i('pax.localize: all done, saving')
 				file.contents = Buffer.from($.html());
 
 				this.push(file);
@@ -435,7 +476,7 @@ module.exports = (function(){
 				// options.base = mod.config.workdir;
 			} else {
 				options.base = src;
-				libx.log.verbose('copy: setting base to: ', options.base);
+				libx.log.verbose('pax.copy: setting base to: ', options.base);
 			}
 		}
 
@@ -452,7 +493,7 @@ module.exports = (function(){
 			p.resolve(stream);
 			if (options.callback) options.callback(stream);
 		});
-		stream.on('error', (err) => libx.log.error('--- ERROR: --- ', err) );
+		stream.on('error', (err) => libx.log.error('pax.copy: --- ERROR: --- ', err) );
 
 		shouldWatch = shouldWatch || false;
 		if (Array.isArray(_source)) _source = libx._.map(_source, i=> i.replace(/^(\!)?\.\//, '$1'));
@@ -472,10 +513,10 @@ module.exports = (function(){
 
 			.pipe(gulp.dest('./dist2/'))
 			.on('error', (err) => 
-				libx.log.e('--- ERROR: --- ', err)
+				libx.log.e('pax.test: --- ERROR: --- ', err)
 				)
 			.on('end', ()=> {
-				libx.log.i('--- DONE --- ')
+				libx.log.i('pax.test: --- DONE --- ')
 				p.resolve();
 			});
 	
@@ -489,10 +530,10 @@ module.exports = (function(){
 		var options =  {}; //{ base: path.relative(__dirname, path.dirname(source)) }; 
 		libx.extend(options, _options);
 
-		libx.log.verbose('watch: Starting to watch "%s"', source);
+		libx.log.verbose('pax.watch: Starting to watch "%s"', source);
 		mod.watchSimple(source, async(ev, p)=> {
 			if (mod.config.watchOnlyChanges == true && ev.type != 'changed') return;
-			libx.log.verbose('mod.watch: File "%s" changed', p, ev.type, dest);
+			libx.log.verbose(`pax.watch: File "${p}" ${ev.type}, building to "${dest}"`);
 			// options.base = './src'
 			// p = path.relative(__dirname, p);
 			await mod.copy(options.useSourceDir ? source : p, dest, middlewares, false, options);
@@ -559,16 +600,16 @@ module.exports = (function(){
 			if (mod.config.devServer.reloadGraceMS == null) mod.config.devServer.reloadGraceMS = 1000;
 			if (mod.config.devServer.reloadDebounceMS == null) mod.config.devServer.reloadDebounceMS = mod.config.devServer.reloadGraceMS;
 			
-			libx.log.verbose(`serve: starting watch (debounce: ${mod.config.devServer.reloadDebounceMS}ms, grace: ${mod.config.devServer.reloadGraceMS}ms)`);
+			libx.log.verbose(`pax.serve: starting watch (debounce: ${mod.config.devServer.reloadDebounceMS}ms, grace: ${mod.config.devServer.reloadGraceMS}ms)`);
 			var debounce = libx.debounce((path)=> {
-				libx.log.verbose('serve: debounced, reloading... ', path);
+				libx.log.verbose('pax.serve: debounced, reloading... ', path);
 				if (watchCallback) watchCallback(path);
 				gulp.src(path).pipe(connect.reload());
 				// setTimeout(()=>gulp.src(path).pipe(connect.reload()), 500);
 			}, mod.config.devServer.reloadDebounceMS, false, true);
 			// mod.watch = async (source, dest, middlewares, callback, _options) => {
 			mod.watchSimple(watchPath, e => {
-				libx.log.verbose('serve: detected change!', e.path);
+				libx.log.verbose('pax.serve: detected change!', e.path);
 				setTimeout(()=>debounce(e.path), mod.config.devServer.reloadGraceMS);
 			}); //, { cmd: path });
 		}
