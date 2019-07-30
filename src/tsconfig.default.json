@@ -15,7 +15,7 @@
 		"preserveConstEnums": true,
 		//"isolatedModules": false
 		"experimentalDecorators": true,
-		// "sourceMap": true,
+		"sourceMap": true,
 		// "inlineSourceMap": true, 
 		"inlineSources": true,
 		"noImplicitAny": false,

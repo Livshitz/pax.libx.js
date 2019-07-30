@@ -969,17 +969,27 @@
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
 
-"@types/jest@^24.0.12":
+"@types/jest@^24.0.12", "@types/jest@^24.0.15":
   version "24.0.15"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.15.tgz#6c42d5af7fe3b44ffff7cc65de7bf741e8fa427f"
   integrity sha512-MU1HIvWUme74stAoc3mgAi+aMlgKOudgEvQDIm1v4RkrDudBh1T+NFp5sftpBAdXdx1J0PbdpJ+M2EsSOi1djA==
   dependencies:
     "@types/jest-diff" "*"
 
+"@types/lodash@^4.14.136":
+  version "4.14.136"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
+  integrity sha512-0GJhzBdvsW2RUccNHOBkabI8HZVdOXmXbXhuKlDEd5Vv12P7oAVGfomGp3Ne21o5D/qu1WmthlNKFaoZJJeErA==
+
 "@types/node@*":
   version "12.0.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
   integrity sha512-b8bbUOTwzIY3V5vDTY1fIJ+ePKDUBqt2hC2woVGotdQQhG/2Sh62HOKHrT7ab+VerXAcPyAiTEipPu/FsreUtg==
+
+"@types/node@^12.6.8":
+  version "12.6.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.8.tgz#e469b4bf9d1c9832aee4907ba8a051494357c12c"
+  integrity sha512-aX+gFgA5GHcDi89KG5keey2zf0WfZk/HAQotEamsK2kbey+8yGKcson0hbK8E+v0NArlCJQCqMP161YhV6ZXLg==
 
 "@types/pug@^2.0.4":
   version "2.0.4"
@@ -5766,11 +5776,14 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^0.2.2:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.2.6.tgz#8cc58706f144df48e4d38d5f7d7544ebe2b5c60e"
-  integrity sha512-J5wNbBOjNcBQSzBh8DTvknUawNPPvcN+2oWfJQB0Dw7xUUe/+j71ig22JcszLkqWvrPzOEwXz82D0eNzAJCC8g==
+libx.js@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.3.3.tgz#1bd82bd5c61e72be186adc07df65a1634921224e"
+  integrity sha512-ns+9i7RalkNWPMprdNqZYGHpa0PSikDaRSpeENz9NvX2wfOglWvOzCk0wHz42dQYUeVO+rEidUYGcjoY89O4iA==
   dependencies:
+    "@types/jest" "^24.0.15"
+    "@types/lodash" "^4.14.136"
+    "@types/node" "^12.6.8"
     buffer "^5.2.1"
     crypto-js "^3.1.9-1"
     deferred-js "^1.0.2"
