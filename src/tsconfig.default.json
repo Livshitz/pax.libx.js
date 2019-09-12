@@ -1,7 +1,8 @@
 {
 	"compileOnSave": true,
 	"include": [
-		"./**/*.ts"
+		"./global.d.ts",
+		"./src/**/*.ts"
 	],
 	"exclude": [
 		"node_modules/**/*"

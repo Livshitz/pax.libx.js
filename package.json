@@ -6,6 +6,7 @@
 	"repository": "https://github.com/Livshitz/pax.libx.js",
 	"author": "Eli Livshitz",
 	"license": "MIT",
+	"types": "pax.libx.d.ts",
 	"dependencies": {
 		"@babel/cli": "^7.4.4",
 		"@babel/core": "^7.4.4",
@@ -49,7 +50,7 @@
 		"into-stream": "^4.0.0",
 		"jest": "^24.8.0",
 		"less-plugin-sass2less": "^1.2.0",
-		"libx.js": "^0.3.11",
+		"libx.js": "^0.3.12",
 		"readable-stream": "^3.3.0",
 		"through": "^2.3.8",
 		"through2": "^3.0.0",

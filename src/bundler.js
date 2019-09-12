@@ -140,7 +140,7 @@ module.exports = (function(){
 		})
 	};
 
-	mod.middlewares.ts = (_options, tsproject = null) => {
+	mod.middlewares.ts = (_options, tsProject = null) => {
 		var options = {
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
@@ -152,10 +152,11 @@ module.exports = (function(){
 			options.module = "amd"
 		}
 
-		if (tsproject == null)
+		if (tsProject == null)
 			return ts(options);
 		else
-			return tsproject(options);
+			// return tsProject(); 
+			return tsProject.src().pipe(tsProject());
 	}
 
 	mod.middlewares.tsAndSourcemaps = (_options, tsconfigCompilerOptions) => {

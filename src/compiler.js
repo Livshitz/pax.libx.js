@@ -2,6 +2,8 @@ const libx = require('libx.js/bundles/essentials');
 libx.node = require('libx.js/node');
 libx.pax = require('./bundler');
 
+const ts = require('gulp-typescript');
+
 libx.log.isShowStacktrace = false;
 
 mod = {};
@@ -33,9 +35,12 @@ mod.options.browserifyOptions = {
 	tsifyOptions: { 
 		global: libx.node.args.global || false,
 		files: [],
+		// include: mod.options.tsconfig.include || [],
 		project: mod.options.tsconfig, //__dirname + '/tsconfig.json',
 	},
 };
+ 
+// var tsProject = ts.createProject(mod.options.tsconfigPath);
 
 mod.build = async () => {
 	return libx.pax.copy((mod.options.src), mod.options.dest, ()=>[
@@ -48,7 +53,8 @@ mod.build = async () => {
 		libx.pax.middlewares.if(mod.options.sourcemaps, libx.pax.middlewares.buffer()),
 		libx.pax.middlewares.if(mod.options.sourcemaps, libx.pax.middlewares.sourcemaps.write('./')),
 
-	], mod.options.watch, {
+	], mod.options.watch, { // options:
+		useSourceDir: true,
 		callback: async ()=> {
 			libx.log.i('build done');
 			if (mod.options.execOnDone != null) {

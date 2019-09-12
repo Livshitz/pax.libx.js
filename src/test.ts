@@ -5,9 +5,7 @@ var libx: LibxJS.ILibxJS = _libx;
 
 class Test {
 	public run () {
-		libx.log.i('test...')
-
-		
+		libx.log.i('test...', libx.pax)
 	}
 }
 
