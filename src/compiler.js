@@ -12,7 +12,9 @@ mod.options = {};
 mod.options.tsconfigPath = libx.node.args.tsconfig || (__dirname + '/tsconfig.default.json');
 mod.options.tsconfig = libx.node.readJsonFileStripComments(mod.options.tsconfigPath);
 mod.options.watch = libx.node.args.watch;
+mod.options.base = libx.node.args.base;
 mod.options.src = libx.node.args.src || './src/**/*.ts';
+mod.options.src = mod.options.src.split(';');
 mod.options.dest = libx.node.args.dest || './build/';
 mod.options.enableBrowserify  = libx.node.args.browserify || false;
 mod.options.sourcemaps = libx.node.args.sourcemaps || true,
@@ -25,7 +27,7 @@ mod.options.browserifyOptions = {
 	babelify: libx.node.args.babelify || libx.node.args.browserify || true,
 	babelifyOptions: {
 		global: libx.node.args.global || false,
-		// presets: ['@babel/preset-env'],
+		presets: ['@babel/preset-env'],
 		// extensions : ['.js','.ts'],
 		sourceMaps: true
 	},
@@ -55,6 +57,7 @@ mod.build = async () => {
 
 	], mod.options.watch, { // options:
 		useSourceDir: true,
+		base: mod.options.base,
 		callback: async ()=> {
 			libx.log.i('build done');
 			if (mod.options.execOnDone != null) {

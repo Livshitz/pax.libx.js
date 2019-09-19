@@ -524,7 +524,6 @@ module.exports = (function(){
 		return p;
 	}
 
-
 	mod.watch = async (source, dest, middlewares, callback, _options) => {
 		if (middlewares != null && typeof middlewares != 'function') throw 'middlewares arguments must be an initializator (function)!'
 		
