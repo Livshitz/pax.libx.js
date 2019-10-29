@@ -1,4 +1,4 @@
-# pax.Libx.js 
+# pax.libx.js 
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
 [![npm](https://img.shields.io/npm/v/pax.libx.js.svg?maxAge=1000)](https://www.npmjs.com/package/pax.libx.js)
