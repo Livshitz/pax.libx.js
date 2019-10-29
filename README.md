@@ -1,4 +1,4 @@
-# Libx.js 
+# pax.Libx.js 
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
 [![npm](https://img.shields.io/npm/v/pax.libx.js.svg?maxAge=1000)](https://www.npmjs.com/package/pax.libx.js)
@@ -17,8 +17,8 @@
 
 
 ## Usage
-> yarn: yarn add pax.libx.js
-
+> yarn: yarn add pax.libx.js   
+or   
 > npm: npm install --save pax.libx.js
 
 ## Contributing
