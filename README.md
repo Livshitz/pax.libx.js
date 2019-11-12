@@ -10,10 +10,15 @@
 > 🛠 pax.libx.js is lightweight and flexible packaging, bundling and building tool for modern web technologies
 
 ## Features: 
-* [TBS]
+* Preconfigured setups for quick and easy browserifing, bundling and packaging web-based apps
+* All-in-one package
+* Compile and browserify Typescript files
+* Watch, delete, serve local source files and compiled
 
 ## Description:
-[TBS]<br/>
+pax.libx.js is aimed to be the foundations of your webapp, providing one-stop-shop for the is needed to serve, bundle, package and more.
+
+See examples [here](examples/browserify.js)
 
 
 ## Usage
