@@ -363,6 +363,7 @@ module.exports = (function(){
 				if (isNetworkResource) {
 					libx.modules.network.httpGet(src, { dataType: '' }).then(data=>handler(data));
 				} else {
+					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
 					var p = path.relative(process.cwd(), mod.config.workdir + '/' + src);
 					fs.readFile(p, (err, data)=> handler(data));
 				}
