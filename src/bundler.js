@@ -1,7 +1,7 @@
 var libx = __libx;
 libx.node = libx.di.get('node') || require('libx.js/node');
-libx.modules.crypto = libx.di.get('crypto') || require('libx.js/modules/crypto');
-libx.modules.network = libx.di.get('network') || require('libx.js/modules/network');
+require('libx.js/modules/crypto');
+require('libx.js/modules/network');
 
 const gulp = require('gulp');
 const gulpif = require('gulp-if');
@@ -329,7 +329,7 @@ module.exports = (function(){
 			var ext = m[3];
 			var isRemote = src.match(/^(.+:)?\/\/|http/g) != null
 			// if (!isRemote) return;
-			var h = libx.modules.crypto.lib.SHA1(src).toString();
+			var h = libx.di.modules.crypto.lib.SHA1(src).toString();
 			var p = (libCacheDir || './') + 'lib-cache/' + (avoidRenameFile ? dir : '');
 			// var fname = avoidRenameFile ? `${name}${ext}` : `${h}${ext}`;
 			var fname = `${name}${ext}`;
@@ -361,7 +361,7 @@ module.exports = (function(){
 				}
 				
 				if (isNetworkResource) {
-					libx.modules.network.httpGet(src, { dataType: '' }).then(data=>handler(data));
+					libx.di.modules.network.httpGet(src, { dataType: '' }).then(data=>handler(data));
 				} else {
 					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
 					var p = path.relative(process.cwd(), mod.config.workdir + '/' + src);
