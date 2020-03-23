@@ -231,7 +231,7 @@ module.exports = (function(){
 		return mod.middlewares.browserify(options); 
 	}
 	mod.middlewares.browserify = (_options = {}) => {
-		options = {
+		var options = {
 			// entries: files,
 			// bare: true,
 			// bundleExternal: true,

@@ -5776,10 +5776,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^0.3.12:
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.3.12.tgz#30a412cf80db40ba70bc3681b96cadfb2b7fdffa"
-  integrity sha512-nl52DaH3CKlZRg1N8+xZi7d6gGACeipL1X56Tr/QHioK1QA4izaUv8NPa0UUdkitvmHDNmVMpUfVHl4Ffzb4Jw==
+libx.js@^0.3.17:
+  version "0.3.22"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.3.22.tgz#d1d386b30ab990df6039bb578f2446e8d03f87b0"
+  integrity sha512-iumr0KGMff3uMjbH6nYWYizD8+Jf9WFZi090blT1ekA/XUIxsSrDMR+xZPSry4HcozhDGvfs+RUW4XvO9GWmeQ==
   dependencies:
     "@types/jest" "^24.0.15"
     "@types/lodash" "^4.14.136"
