@@ -1,6 +1,6 @@
 {
 	"name": "pax.libx.js",
-	"version": "0.1.17",
+	"version": "0.1.18",
 	"description": "Flexible web assets packing and bundling library",
 	"main": "src/index.js",
 	"repository": "https://github.com/Livshitz/pax.libx.js",
@@ -8,7 +8,6 @@
 	"license": "MIT",
 	"types": "pax.libx.d.ts",
 	"dependencies": {
-		"libx.js": "*",
 		"@babel/cli": "^7.4.4",
 		"@babel/core": "^7.4.4",
 		"@babel/plugin-transform-runtime": "^7.4.4",
@@ -51,6 +50,7 @@
 		"into-stream": "^4.0.0",
 		"jest": "^24.8.0",
 		"less-plugin-sass2less": "^1.2.0",
+		"libx.js": "*",
 		"node-sass": "^4.14.1",
 		"pug": "^2.0.4",
 		"readable-stream": "^3.3.0",
