@@ -25,9 +25,11 @@ const spawn = require('child_process').spawn;
 // middleweres
 const minify = require("gulp-babel-minify");
 const rename = require('gulp-rename');
+const pug = require('pug');
 const jade = require('gulp-pug');
 const less = require('gulp-less');
 const sass = require('gulp-sass');
+const nodeSass = require('node-sass');
 const sass2less = require('less-plugin-sass2less')
 const less2sass = require('gulp-less2sass')
 const gulpBabel = require('gulp-babel');
@@ -50,6 +52,7 @@ const babel = require("@babel/core");
 const transform = require('vinyl-transform');
 const intoStream = require('into-stream');
 const uglify = require('gulp-uglify');
+const vueCompiler = require('vue-template-compiler');
 
 module.exports = (function(){
 	var mod = {};
@@ -102,6 +105,55 @@ module.exports = (function(){
 			locals: libx.extend(locals || {}, { config: mod.projconfig }),
 			// pretty: mod.config.isProd,
 		})
+	};
+	mod.middlewares.vue = (content, file, stylesFile) => {
+		let options = {
+			whitespace: 'condense',
+		};
+		let parsed = vueCompiler.parseComponent(content, options);
+		let template = parsed.template ? parsed.template.content : '';
+		let script = parsed.script ? parsed.script.content : '';
+		let style = parsed.styles ? parsed.styles[0].content : '';
+		let componentName = file.relative;
+		
+		// convert template from jade/pug to html
+		if (parsed.template != null && (parsed.template.attrs.lang == 'pug' || parsed.template.attrs.lang == 'jade')) {
+			template = pug.compile(template)({});
+		}
+	
+		if (style != null && (parsed.styles[0].attrs.lang == 'scss' || parsed.template.attrs.lang == 'sass')) {
+			style = nodeSass.renderSync({ data: style }).css.toString();
+		}
+	
+		if (style != null && style.trim() != "") {
+			let hash = componentName.hashCode();
+			if (parsed.styles[0].attrs.scoped == true) {
+				template = template.replace(/>/, ` data-${hash}>`);
+				let style1 = style.replace(/(.*){/g, ` [data-${hash}] $1 {`);
+				let style2 = style.replace(/(\S*)\s*{/g, `$1[data-${hash}] {`);
+				style = style1 + '\n' + style2;
+			}
+	
+			let file = stylesFile; //'./build/styles/vue-components.css'; //'./build/styles/style.css'
+			if (!fs.existsSync(file)) fs.writeFileSync(file, '');
+			let all = fs.readFileSync(file).toString();
+			let newStr = `/* ##${componentName} */\n` + style + `\n/* ##${componentName}-end */`;
+			if (all.indexOf(`/* ##${componentName}`) == -1) all = (all || '') +  '\n' + newStr + '\n';
+			else {
+				let reg = new RegExp(`\\/\\* ##${componentName} \\*\\/([\\s\\S]\*?)\\/\\* ##${componentName}-end \\*\\/`, 'sm');
+				all = all.replace(reg, newStr);
+			}
+			fs.writeFileSync(file, all);
+		}
+	
+		let templateEscaped = template.trim().replace(/`/g, '\\`');
+		let scriptWithTemplate = script.match(/export default ?\{/)
+			? script.replace(/export default ?\{/, `$&\n\ttemplate: \`\n${templateEscaped}\`,`)
+			: `${script}\n export default {\n\ttemplate: \`\n${templateEscaped}\`};`;
+	
+		scriptWithTemplate = scriptWithTemplate.replace(/^\s+?export default ?\{/, 'module.exports = {')
+	
+		return scriptWithTemplate;
 	};
 	mod.middlewares.usemin = (base) => {
 		libx.log.verbose('pax.usemin: ');
