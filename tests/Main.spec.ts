@@ -1,8 +1,8 @@
-// import { App } from '../src/Main';
+import Bundler from '../src/index';
 
-// const main = new App();
+// const main = new Bundler();
 
-// test('should return true', () => {
-//     expect(main.run()).toEqual(true);
-// });
+test('should return true', () => {
+    expect(Bundler).not.toBeNull();
+});
   

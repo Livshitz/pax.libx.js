@@ -1,10 +1,7 @@
-libx = require('libx.js');
+const libx = require('libx.js');
+let bundler = require('./bundler'); 
 
-module.exports = (function(){
-	var mod = {};
-
-	return require('./bundler'); 
-})();
+export default module.exports = bundler;
 
 (()=>{ // Dependency Injector auto module registration 
 	libx.di.register('pax', module.exports);
