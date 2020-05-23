@@ -1,7 +1,10 @@
 module.exports = (function(){
 	// Include libx.js essentials in the outputted file as global (=window) variable:
-	// global._libx_avoidExtensions = true; // comment out if those extensions interfere with other libraries and uncomment the 'libx.extensions.apply*' commands bellow
-	global.libx = require('libx.js/bundles/browser.essentials');
+	// (<any>global)._libx_avoidExtensions = true; // comment out if those extensions interfere with other libraries and uncomment the 'libx.extensions.apply*' commands bellow
+	const libx = require('libx.js/bundles/browser.essentials');
+
+	(<any>global).libx = libx;
+
 	// libx.extensions.applyStringExtensions();
 	// libx.extensions.applyDateExtensions();
 	// libx.extensions.applyArrayExtensions();
@@ -9,9 +12,9 @@ module.exports = (function(){
 	// libx.log.isDebug = true;
 
 	// Register general dependencies:
-	require('libx.js/modules/network');
-	require('libx.js/modules/appEvents');
-	require('libx.js/modules/rxjs');
+	// require('libx.js/modules/network');
+	// require('libx.js/modules/appEvents');
+	// require('libx.js/modules/rxjs');
 
 	// Register modules into DI:
 	// window.myModule = new (require('./modules/myModule').default)();
@@ -34,5 +37,5 @@ module.exports = (function(){
 	// Say Hey on startup to prove we're there
 	libx.log.v('main.js is ready')
 
-	return global.libx;
+	return libx;
 })();

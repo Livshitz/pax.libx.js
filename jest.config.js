@@ -6,10 +6,6 @@ module.exports = {
 		"^.+\\.jsx?$": "babel-jest",
 	  	"^.+\\.ts?$": "ts-jest"
 	},
-	// globalSetup: './tests/setup.ts',
-	setupFiles: [
-		"<rootDir>/tests/setup.ts"
-	],
 	testRegex: "(/__tests__/.*|/tests/.*(\\.|/)(test|spec))\\.ts$",
 	moduleFileExtensions: [
 	  "ts",
@@ -20,10 +16,9 @@ module.exports = {
 	  "node"
 	],
 	verbose: true,
-	//[jest-config].globals.ts-jest.tsConfig
-	// globals: {
-	// 	"ts-jest": {
-	// 		tsConfig: "tsconfig.test.json"
-	// 	}
-	// }
+	reporters: [ "default", "jest-junit" ],
+	coverageDirectory: ".tmp/coverage",
+	transformIgnorePatterns: [
+		"<rootDir>/node_modules/(?!libx\.js/.*)"
+	],
 }

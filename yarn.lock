@@ -4022,10 +4022,10 @@ gulp-pug@^4.0.1:
     replace-ext "^1.0.0"
     through2 "^2.0.3"
 
-gulp-rename@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.4.0.tgz#de1c718e7c4095ae861f7296ef4f3248648240bd"
-  integrity sha512-swzbIGb/arEoFK89tPY58vg3Ok1bw+d35PfUNwWqdo7KM4jkmuGA78JiDNqR+JeZFaeeHnRg9N7aihX3YPmsyg==
+gulp-rename@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
+  integrity sha1-OtRCh2PwXidk3sHGfYaNsnVoeBc=
 
 gulp-sass@^4.0.2:
   version "4.0.2"
@@ -5553,10 +5553,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^0.6.11:
-  version "0.6.11"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.6.11.tgz#609e5095d4950f598bbb5d6da611a1bc75b77375"
-  integrity sha512-UTGDUiXNUV7pc/6/BKK8gnRkwydKmbtwcqKZxcTgpW91z7yTJglKK9ObZRHT827/0bqJwOkcXKVLl6SslS+qEw==
+libx.js@*:
+  version "0.6.15"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-0.6.15.tgz#8b0d5b4d335ea91124e07ed68aa60cb276430dea"
+  integrity sha512-i49wB5h/V9X4hBOj+p28qr3MiSnp/rriiZles6O2jz7C57afeVcqRrF9wIp/djS6ylgFHji0qBJTyozMCC7oLg==
   dependencies:
     "@types/jest" "^24.0.15"
     "@types/lodash" "^4.14.136"
@@ -5569,10 +5569,11 @@ libx.js@^0.6.11:
     glob "^7.1.4"
     json-bump "^0.1.3"
     lodash "^4.17.15"
+    promisify.libx.js "*"
     redux "^4.0.1"
     rxjs "^6.4.0"
     rxjs-compat "^6.4.0"
-    yargs "^12.0.5"
+    yargs "^13.1.0"
 
 liftoff@^2.1.0:
   version "2.5.0"
@@ -7032,6 +7033,11 @@ promise@^7.0.1, promise@^7.1.1:
   integrity sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==
   dependencies:
     asap "~2.0.3"
+
+promisify.libx.js@*:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/promisify.libx.js/-/promisify.libx.js-0.2.12.tgz#894ff126b7543a819d4259a086e85a447b35c2fc"
+  integrity sha512-s8d8ZpI+7nBKcK0pRqCLQN4LpowaFgM7GfTgqOVWFCgv8nEFOvEURx5YaonC/Q08PexqawfglP7QnsXbYshOcQ==
 
 prompts@^2.0.1:
   version "2.1.0"
@@ -9273,7 +9279,7 @@ yargs-parser@^5.0.0:
   dependencies:
     camelcase "^3.0.0"
 
-yargs@^12.0.2, yargs@^12.0.5:
+yargs@^12.0.2:
   version "12.0.5"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.5.tgz#05f5997b609647b64f66b81e3b4b10a368e7ad13"
   integrity sha512-Lhz8TLaYnxq/2ObqHDql8dX8CJi97oHxrjUcYtzKbbykPtVW9WB+poxI+NM2UIzsMgNCZTIf0AQwsjK5yMAqZw==
@@ -9291,7 +9297,7 @@ yargs@^12.0.2, yargs@^12.0.5:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-yargs@^13.3.2:
+yargs@^13.1.0, yargs@^13.3.2:
   version "13.3.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
   integrity sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==

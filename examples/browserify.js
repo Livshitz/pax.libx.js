@@ -10,7 +10,7 @@ How to run:
 */
 
 const libx = require('libx.js');
-libx.pax = require("../src/index"); //pax.libx.js
+libx.pax = require(__dirname + "/../build/index"); //pax.libx.js
 libx.node = require("libx.js/node");
 
 (async ()=>{ /* init */

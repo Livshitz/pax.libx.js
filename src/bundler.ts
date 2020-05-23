@@ -1,4 +1,5 @@
-var libx = __libx;
+declare var __libx: LibxJS.ILibxJS;
+libx = __libx;
 libx.node = libx.di.get('node') || require('libx.js/node');
 require('libx.js/modules/crypto');
 require('libx.js/modules/network');
@@ -55,7 +56,7 @@ const uglify = require('gulp-uglify');
 const vueCompiler = require('vue-template-compiler');
 
 module.exports = (function(){
-	var mod = {};
+	var mod: any = {};
 
 	var wrapper = function(fun) {
 		var args = new Array(arguments).slice(1);
@@ -193,7 +194,7 @@ module.exports = (function(){
 	};
 
 	mod.middlewares.ts = (_options, tsProject = null) => {
-		var options = {
+		var options: any = {
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
 		};
@@ -212,7 +213,7 @@ module.exports = (function(){
 	}
 
 	mod.middlewares.tsAndSourcemaps = (_options, tsconfigCompilerOptions) => {
-		var options = {
+		var options: any = {
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
 		};
@@ -282,8 +283,8 @@ module.exports = (function(){
 		
 		return mod.middlewares.browserify(options); 
 	}
-	mod.middlewares.browserify = (_options = {}) => {
-		var options = {
+	mod.middlewares.browserify = (_options: any = {}) => {
+		var options: any = {
 			// entries: files,
 			// bare: true,
 			// bundleExternal: true,
@@ -368,7 +369,7 @@ module.exports = (function(){
 		return browserified;
 	};
 	mod.middlewares.localize = (libCacheDir, dest, avoidCache) => {
-		var transform = async (e, attr, avoidRenameFile) => {
+		var transform = async (e, attr, avoidRenameFile?) => {
 			var promise = libx.newPromise();
 			var sourceDir = process.cwd(); 
 			var src = e.attr(attr);
@@ -406,7 +407,7 @@ module.exports = (function(){
 					libx.log.d('pax.localize: got data: ', data.length);
 						
 					fs.writeFile(f, data, err=> {
-						if (err) throw 'Write: error: ', err;
+						if (err) throw 'Write: error: ' + err;
 						func();
 						// return onFileReady(e, attr, f, ext, fname, avoidRenameFile ? dir : null);
 					});
@@ -416,7 +417,7 @@ module.exports = (function(){
 					libx.di.modules.network.httpGet(src, { dataType: '' }).then(data=>handler(data));
 				} else {
 					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
-					var p = path.relative(process.cwd(), mod.config.workdir + '/' + src);
+					let p = path.relative(process.cwd(), mod.config.workdir + '/' + src);
 					fs.readFile(p, (err, data)=> handler(data));
 				}
 			} else {
@@ -514,7 +515,7 @@ module.exports = (function(){
 
 		var p = libx.newPromise();
 
-		var options = { }; // base: mod.config.workdir };
+		var options: any = { }; // base: mod.config.workdir };
 		libx.extend(options, _options);
 
 		// if '_source' contains 
@@ -525,7 +526,7 @@ module.exports = (function(){
 				if (m == null || m.length <= 1) return;
 				return m[1];
 			})
-			src = libx._.reduce(src);
+			src = libx._.reduce(src, null);
 			if (src == null || src.length == 0) {
 				// options.base = mod.config.workdir;
 			} else {
@@ -580,7 +581,7 @@ module.exports = (function(){
 	mod.watch = async (source, dest, middlewares, callback, _options) => {
 		if (middlewares != null && typeof middlewares != 'function') throw 'middlewares arguments must be an initializator (function)!'
 		
-		var options =  {}; //{ base: path.relative(__dirname, path.dirname(source)) }; 
+		var options: any =  {}; //{ base: path.relative(__dirname, path.dirname(source)) }; 
 		libx.extend(options, _options);
 
 		libx.log.verbose('pax.watch: Starting to watch "%s"', source);

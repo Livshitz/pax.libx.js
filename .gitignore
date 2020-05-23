@@ -1,19 +1,16 @@
-/node_modules
-/.tmp
-/.sass-cache
-/bower_components
+# Logs
+logs
 *.log
-*.bjs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+node_modules/
+node_modules
 
-/.firebase/*.cache
-/**/node_modules/
-lib-cache/
+# ///////////
 
-# psm
-.gitpsm/
-psm.sh
-
-packages/*
-
-.npmrc
-build
+dist/
+build/
+yarn.lock
+.tmp/

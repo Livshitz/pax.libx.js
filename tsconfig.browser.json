@@ -1,0 +1,40 @@
+{
+	// "extends": "./tsconfig.base.json",
+
+	"compilerOptions": {
+		"target": "es2015",
+		"module": "commonjs",
+		// "resolveJsonModule": false,
+		"moduleResolution": "Node",
+		// "outDir": "./dist/",
+		// "outFile": "./dist/concurrency.libx.js",
+
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"inlineSources": true,
+		// "skipLibCheck": true,
+		"typeRoots": [
+			"node_modules/@types", 
+			"./types"
+		],
+		"types": [
+			"libx.js",
+			"node"
+		]
+	},
+
+	// "include": [
+		// "./src/**/*.d.ts",
+		// "./src/**/*.ts"
+		// "./src/browser.ts"
+	// ],
+	"exclude": [
+		"node_modules/**/*",
+		"dist",
+		"build",
+		"tests"
+	]
+}

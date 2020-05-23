@@ -1,16 +1,14 @@
-const libx = require('libx.js/bundles/essentials');
+libx = <LibxJS.ILibxJS>require('libx.js/bundles/essentials');
 libx.node = require('libx.js/node');
 libx.pax = require('./bundler');
 
-const ts = require('gulp-typescript');
-
 libx.log.isShowStacktrace = false;
 
-mod = {};
+const mod: any = {};
 mod.options = {};
 
 mod.options.tsconfigPath = libx.node.args.tsconfig || (__dirname + '/tsconfig.default.json');
-mod.options.tsconfig = libx.node.readJsonFileStripComments(mod.options.tsconfigPath);
+mod.options.tsconfig = libx.node.readJsonStripComments(mod.options.tsconfigPath);
 mod.options.watch = libx.node.args.watch;
 mod.options.base = libx.node.args.base;
 mod.options.src = libx.node.args.src || './src/**/*.ts';

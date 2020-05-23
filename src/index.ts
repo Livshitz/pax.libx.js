@@ -1,4 +1,4 @@
-const libx = require('libx.js');
+libx = require('libx.js');
 
 module.exports = (function(){
 	var mod = {};
