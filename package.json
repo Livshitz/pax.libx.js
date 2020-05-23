@@ -10,7 +10,7 @@
 	"scripts": {
 		"build": "tsc",
 		"watch": "tsc -w",
-        "test": "jest --detectOpenHandles --runInBand",
+        "test": "jest --detectOpenHandles --runInBand --reporters=jest-junit",
 		"test:ci": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura --coverageReporters=html",
 		"build:browserify:example": "node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y --minify  && du -sh .tmp/example/main.min.js"
 	},
