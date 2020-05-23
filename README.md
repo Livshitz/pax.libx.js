@@ -3,6 +3,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
 [![npm](https://img.shields.io/npm/v/pax.libx.js.svg?maxAge=1000)](https://www.npmjs.com/package/pax.libx.js)
 [![npm](https://img.shields.io/github/languages/code-size/livshitz/pax.libx.js.svg?label=source%20code%20size)](https://www.github.com/livshitz/pax.libx.js)
+![Node.js CI](https://github.com/Livshitz/pax.libx.js/workflows/Node.js%20CI/badge.svg)
 <!---
 [![CircleCI](https://circleci.com/gh/Livshitz/libx.fuser/tree/master.svg?style=shield)](https://circleci.com/gh/Livshitz/libx.fuser)
 [![npm](https://img.shields.io/bundlephobia/minzip/pax.libx.js.svg?style=plastic)](https://www.npmjs.com/package/pax.libx.js)
