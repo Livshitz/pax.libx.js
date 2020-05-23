@@ -10,7 +10,7 @@
 [![npm](https://img.shields.io/bundlephobia/min/pax.libx.js.svg?style=plastic)](https://www.npmjs.com/package/pax.libx.js)
 -->
 
-> 🛠 pax.libx.js is lightweight and flexible packaging, bundling and building tool for modern web technologies
+> 📦 pax.libx.js is lightweight and flexible packaging, bundling and building tool for modern web technologies
 
 ## Features: 
 * Preconfigured setups for quick and easy browserifing, bundling and packaging web-based apps
