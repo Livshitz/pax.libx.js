@@ -29,7 +29,7 @@ jobs:
         scope: '@octocat' # Defaults to the user or organization that owns the workflow file:  
     - run: yarn --frozen-lockfile
     - run: yarn build
-    - run: yarn test
+    - run: yarn test:ci
     - run: |
         git config --global push.default simple
         git config user.email "elya.livshitz@gmail.com"
