@@ -1,6 +1,6 @@
 {
 	"name": "pax.libx.js",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"description": "Flexible web assets packing and bundling library",
 	"main": "src/index.js",
 	"repository": "https://github.com/Livshitz/pax.libx.js",
@@ -10,7 +10,7 @@
 	"scripts": {
 		"build": "tsc",
 		"watch": "tsc -w",
-        "test": "jest --detectOpenHandles --runInBand",
+		"test": "jest --detectOpenHandles --runInBand",
 		"test:ci": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura --coverageReporters=html",
 		"build:browserify:example": "node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y --minify  && du -sh .tmp/example/main.min.js",
 		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\""
@@ -93,11 +93,11 @@
 		"jest-junit-reporter": "^1.1.0"
 	},
 	"jest": {
-        "coverageReporters": [
-            "cobertura",
-            "html"
-        ]
-    },
+		"coverageReporters": [
+			"cobertura",
+			"html"
+		]
+	},
 	"jest-junit": {
 		"suiteName": "jest tests",
 		"output": "./.tmp/test/TEST-RESULTS.xml",
