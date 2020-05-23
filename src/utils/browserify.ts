@@ -24,10 +24,10 @@ import * as path from 'path';
 	if (libx.node.args.y == null && await libx.node.prompts.confirm(`We're going to delete "${dest}", ok?`) != true) return;
 	await libx.pax.delete(dest);
 
-	const tsconfig = libx.pax.ts.createProject(__dirname + '/../../tsconfig.browser.json');
-	let tsOptions = {
-		...tsconfig.config.compilerOptions,
-	}
+	// const tsconfig = libx.pax.ts.createProject(__dirname + '/../../tsconfig.browser.json');
+	// let tsOptions = {
+	// 	...tsconfig.config.compilerOptions,
+	// }
 	let bundlerOptions = {
 		tsify: true,
 		// tsifyOptions: tsOptions,
