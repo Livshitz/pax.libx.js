@@ -1,3 +1,6 @@
-var pax = require('../src/index.js')
+var pax = require('../build/index.js')
 
-console.log(pax)
+
+pax.watchSimple('../**/*.js', (ev)=> {
+	console.log('change!', ev);
+})

@@ -1,10 +1,12 @@
 declare var __libx: LibxJS.ILibxJS;
-libx = __libx;
+// libx = __libx;
+// import libx from 'libx.js/bundles/essentials';
+const libx: LibxJS.ILibxJS = __libx || require('libx.js/bundles/essentials')
+// libx.di.modules.crypto = require('libx.js/modules/crypto');
 libx.node = libx.di.get('node') || require('libx.js/node');
-require('libx.js/modules/crypto');
 require('libx.js/modules/network');
 
-const gulp = require('gulp');
+import * as gulp from 'gulp';
 const gulpif = require('gulp-if');
 const through = require('through');
 const through2 = require('through2');
@@ -19,6 +21,9 @@ const shell = require('gulp-shell');
 const compression = require('compression');
 const exec = require('child_process').exec;
 const spawn = require('child_process').spawn;
+import * as typescript from "typescript";
+const Stream = require('stream')
+const vinyl = require('vinyl')
 
 // const filter = require("gulp-filter");
 // const chokidar = require('chokidar');
@@ -27,8 +32,9 @@ const spawn = require('child_process').spawn;
 const minify = require("gulp-babel-minify");
 const rename = require('gulp-rename');
 const pug = require('pug');
+const less = require('less');
 const jade = require('gulp-pug');
-const less = require('gulp-less');
+const gulpless = require('gulp-less');
 const sass = require('gulp-sass');
 const nodeSass = require('node-sass');
 const sass2less = require('less-plugin-sass2less')
@@ -42,6 +48,7 @@ const debug = require('gulp-debug');
 const browserify = require('browserify');
 const babelify = require("babelify");
 const tsify = require("tsify");
+const esmify = require("esmify");
 const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const source = require('vinyl-source-stream');
@@ -55,6 +62,32 @@ const intoStream = require('into-stream');
 const uglify = require('gulp-uglify');
 const vueCompiler = require('vue-template-compiler');
 
+less.renderSync = function (input, options) {
+    if (!options || typeof options != "object") options = {};
+    options.sync = true;
+    options.syncImport = true;
+    var css;
+    this.render(input, options, function (err, result) {
+        if (err) throw err;
+        css = result.css;
+    });
+    return css;
+};
+
+function string_src(filename, string) {
+	var src = require('stream').Readable({ objectMode: true })
+	src._read = function () {
+	  this.push(new vinyl({
+		cwd: "",
+		base: "",
+		path: filename,
+		contents: Buffer.from(string)
+	  }))
+	  this.push(null)
+	}
+	return src
+}
+
 module.exports = (function(){
 	var mod: any = {};
 
@@ -64,6 +97,10 @@ module.exports = (function(){
 	}
 
 	mod.ts = ts;
+
+	mod.tsProject = (configPath: string, extendedOptions?: {}) => {
+		return ts.createProject(configPath, extendedOptions);
+	};	
 
 	//#region middlewares: 
 	mod.middlewares = {};
@@ -87,7 +124,7 @@ module.exports = (function(){
 		});
 	}
 	mod.middlewares.less = () => {
-		return less({
+		return gulpless({
 			paths: [path.join(__dirname, 'less', 'includes')],
 			plugins: [sass2less]
 		})
@@ -107,23 +144,55 @@ module.exports = (function(){
 			// pretty: mod.config.isProd,
 		})
 	};
-	mod.middlewares.vue = (content, file, stylesFile) => {
+	mod.middlewares.vue = (content, file, stylesFile, compilerOptions={}) => {
 		let options = {
 			whitespace: 'condense',
 		};
 		let parsed = vueCompiler.parseComponent(content, options);
 		let template = parsed.template ? parsed.template.content : '';
 		let script = parsed.script ? parsed.script.content : '';
-		let style = parsed.styles ? parsed.styles[0].content : '';
+		let style = (parsed.styles && parsed.styles.length > 0) ? parsed.styles[0].content : '';
 		let componentName = file.relative;
 		
-		// convert template from jade/pug to html
+		if (parsed.script != null && (parsed.script.attrs.lang == 'ts')) {
+			const compiled = typescript.transpileModule(script, { 
+				compilerOptions: libx.extend({ 
+					target: typescript.ScriptTarget.ES2015, 
+					module: typescript.ModuleKind.ES2020, 
+					moduleResolution: typescript.ModuleResolutionKind.NodeJs,
+				}, compilerOptions)
+			});
+			script = compiled.outputText;
+
+			// const p = libx.newPromise();
+			// gulp.src(string_src('virtualFile.ts', script))
+			// 	.pipe(mod.middlewares.ts())
+			// 	.pipe(gulp.dest())
+			// 	.on('end', (newStr)=>{
+			// 		p.resolve(newStr);
+			// 	});
+
+			// const str = await p;
+			// script = str;
+
+			// const st = new Stream.Readable();
+			// st.push(script, 'utf8');
+			// st.push(null);
+			// const x = mod.middlewares.ts();
+			// script = x(st);
+			// script = typescript.compile(script)({});
+		}
+
 		if (parsed.template != null && (parsed.template.attrs.lang == 'pug' || parsed.template.attrs.lang == 'jade')) {
 			template = pug.compile(template)({});
 		}
 	
-		if (style != null && (parsed.styles[0].attrs.lang == 'scss' || parsed.template.attrs.lang == 'sass')) {
-			style = nodeSass.renderSync({ data: style }).css.toString();
+		if (style != null && style != ''){
+			if (parsed.styles[0].attrs.lang == 'scss' || parsed.template.attrs.lang == 'sass') {
+				style = nodeSass.renderSync({ data: style }).css.toString();
+			} else if (parsed.styles[0].attrs.lang == 'less') {
+				style = less.renderSync(style);
+			}
 		}
 	
 		if (style != null && style.trim() != "") {
@@ -148,11 +217,20 @@ module.exports = (function(){
 		}
 	
 		let templateEscaped = template.trim().replace(/`/g, '\\`');
-		let scriptWithTemplate = script.match(/export default ?\{/)
-			? script.replace(/export default ?\{/, `$&\n\ttemplate: \`\n${templateEscaped}\`,`)
-			: `${script}\n export default {\n\ttemplate: \`\n${templateEscaped}\`};`;
-	
-		scriptWithTemplate = scriptWithTemplate.replace(/^\s+?export default ?\{/, 'module.exports = {')
+		let scriptWithTemplate = templateEscaped;
+		if (script.match(/export default ?\{/)) {
+			scriptWithTemplate = script.replace(/export default ?\{/, `$&\n\ttemplate: \`\n${templateEscaped}\`,`);
+		} else if (script.match(/exports.default\s?\=\s?\{/)) {
+			scriptWithTemplate = script.replace(/exports.default\s?\=\s?\{/, `$&\n\ttemplate: \`${templateEscaped}\`,`);
+		} else if (script.match(/exports_1\(\"default\",\s?\{/)) {
+			scriptWithTemplate = script.replace(/exports_1\(\"default\",\s?\{/, `$&\n\ttemplate: \`${templateEscaped}\`,`);
+		} else if (script.match(/exports\s?\=\s?\{/)) {
+			scriptWithTemplate = script.replace(/exports\s?\=\s?\{/, `$&\n\ttemplate: \`${templateEscaped}\`,`);
+		} else {
+			scriptWithTemplate = `${script}\n exports = {\n\ttemplate: \`\n${templateEscaped}\`};`;
+		}
+
+		scriptWithTemplate = scriptWithTemplate.replace(/^\s+?export default ?\{/, 'exports = {')
 	
 		return scriptWithTemplate;
 	};
@@ -193,7 +271,11 @@ module.exports = (function(){
 		})
 	};
 
-	mod.middlewares.ts = (_options, tsProject = null) => {
+	mod.middlewares.tsWithProject = (tsProject) => {
+		return tsProject.src().pipe(tsProject());
+	}
+
+	mod.middlewares.ts = (_options) => {
 		var options: any = {
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
@@ -202,14 +284,10 @@ module.exports = (function(){
 
 		// outFile forces the use of 'system' or 'amd'
 		if (options.outFile != null) {
-			options.module = "amd"
+			options.module = "amd";
 		}
 
-		if (tsProject == null)
-			return ts(options);
-		else
-			// return tsProject(); 
-			return tsProject.src().pipe(tsProject());
+		return ts(options);
 	}
 
 	mod.middlewares.tsAndSourcemaps = (_options, tsconfigCompilerOptions) => {
@@ -297,6 +375,7 @@ module.exports = (function(){
 			plumber: false,
 			minify: false,
 			useStream: false,
+			esmify: false,
 		}
 		options.babelifyOptions = {
 			global: false,
@@ -312,9 +391,10 @@ module.exports = (function(){
 				[
 					'@babel/preset-env', 
 					{
-						targets: _options.target || options.target,
-						// esmodules: true,
-						// modules: 'commonjs',
+						targets: {
+							"esmodules": true
+						},
+						// modules: 'ES6',
 						// useBuiltIns: "entry",
 					},
 				]
@@ -348,7 +428,8 @@ module.exports = (function(){
 
 				bundle = browserify(content, options);
 
-				if (options.tsify) bundle.plugin(tsify, options.tsifyOptions) //, { noImplicitAny: false, target: 'es3' })
+				if (options.tsify) bundle.plugin(tsify, options.tsifyOptions); //, { noImplicitAny: false, target: 'es3' })
+				if (options.esmify) bundle.plugin(esmify);
 				if (options.babelify) bundle.transform(babelify, options.babelifyOptions);
 
 				chunk.contents = bundle.bundle();
@@ -515,7 +596,7 @@ module.exports = (function(){
 
 		var p = libx.newPromise();
 
-		var options: any = { }; // base: mod.config.workdir };
+		var options: any = { allowEmpty: true }; // base: mod.config.workdir };
 		libx.extend(options, _options);
 
 		// if '_source' contains 
@@ -592,7 +673,8 @@ module.exports = (function(){
 			// p = path.relative(__dirname, p);
 			await mod.copy(options.useSourceDir ? source : p, dest, middlewares, false, options);
 			if (callback) callback(p);
-		})
+			libx.log.verbose(`pax.watch: ${libx.log.color('Done', libx.log.colors.fgGreen)} "${p}"`);
+		}, options);
 	};
 
 	mod.watchSimple = async (source, callback, _options) => {
@@ -607,13 +689,22 @@ module.exports = (function(){
 			source = path.relative(dir, source);
 		}
 		
-		var options = { cwd: dir };
+		var options = { cwd: dir, throttle: 0 };
 		options = libx.extend(options, _options); // {cwd: './'}
-		gulp.watch(source,  options , async (ev)=> { //
-			var p = ev.path;
-			p = path.relative(dir, p);
-			if (callback) callback(ev, p);
-		});
+
+		const cbkWrapper = (eventName, _path, stats)=> {
+			_path = path.relative(dir, _path);
+			if (callback) callback({ type: eventName, path: _path }, _path, stats);
+		};
+		let cbk: Function = cbkWrapper;
+		if ((<any>options).useSourceDir) {
+			cbk = libx.throttle(cbkWrapper, options.throttle, false);
+		}
+		gulp.watch(source,  options).on('all', cbk);
+		// gulp.watch(source,  options).on('all', async (eventName, _path, stats)=>{
+		// 	_path = path.relative(dir, _path);
+		// 	if (callback) callback({ type: eventName, path: _path }, _path, stats);
+		// });
 	}
 
 	mod.triggerChange = async (file) => {
@@ -629,6 +720,7 @@ module.exports = (function(){
 				port: livePort
 			} : false,
 			root: path,
+			index: true,
 			fallback: path + '/' + 'index' + '.html',
 			// debug: true,
 			https: mod.config.devServer.useHttps,
