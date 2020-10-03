@@ -6,7 +6,8 @@ const libx: LibxJS.ILibxJS = __libx || require('libx.js/bundles/essentials')
 libx.node = libx.di.get('node') || require('libx.js/node');
 require('libx.js/modules/network');
 
-import * as gulp from 'gulp';
+// import * as gulp from 'gulp';
+import gulp from 'gulp';
 const gulpif = require('gulp-if');
 const through = require('through');
 const through2 = require('through2');
@@ -241,7 +242,7 @@ module.exports = (function(){
 			path: base, //'./tests/bundle/',
 			//outputRelativePath: "dist",
 			css: [ cleanCss(), 'concat' ], // rev()
-			html: [ htmlmin({ collapseWhitespace: true }) ],
+			html: [ ()=> htmlmin({ collapseWhitespace: true }) ],
 			js: [ gulpif(mod.config.isProd, minify({
 				mangle: {
 				keepClassName: true
@@ -487,19 +488,22 @@ module.exports = (function(){
 						throw `Could not find "${src}"!`;
 					libx.log.d('pax.localize: got data: ', data.length);
 						
-					fs.writeFile(f, data, err=> {
-						if (err) throw 'Write: error: ' + err;
-						func();
-						// return onFileReady(e, attr, f, ext, fname, avoidRenameFile ? dir : null);
-					});
+					try {
+						fs.writeFileSync(f, data);
+					} catch(err) {
+						throw 'Write: error: ' + err;
+					}
+					func();
 				}
 				
 				if (isNetworkResource) {
-					libx.di.modules.network.httpGet(src, { dataType: '' }).then(data=>handler(data));
+					const data = await libx.di.modules.network.httpGet(src, { dataType: '' });
+					handler(data);
 				} else {
 					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
 					let p = path.relative(process.cwd(), mod.config.workdir + '/' + src);
-					fs.readFile(p, (err, data)=> handler(data));
+					const data = fs.readFileSync(p);
+					handler(data);
 				}
 			} else {
 				func();
@@ -526,7 +530,7 @@ module.exports = (function(){
 			dir = dir || '';
 			dir = dir.replace(/^fonts(\/)?(lib)?/, '');
 			var p = `/resources/${type}/lib/${dir}`;
-			mod.copy([file], dest + p)
+			await mod.copy([file], dest + p)
 		
 			if (attr != null) elm.attr(attr, p.substr(1) + fname);
 		}
@@ -534,19 +538,15 @@ module.exports = (function(){
 		return through2.obj(async function(file, encoding, callback) {
 			if(file.isBuffer()) {
 				var $ = cheerio.load(file.contents);
-				// $('script').each(async (i, e)=> {
-				// 	libx.log.v('$$$ ', i, $(e).attr('src'))
-				// });
 
 				var p = [];
 
-				$('script').each(async (i, e)=> {
+				$('script[src][type=""], script[src][type="module"], script[src][type="javascript"], script[src]:not([type])').each(async (i, e)=> {
 					p.push(transform($(e), 'src'));
 				})
 				$('link').each(async (i, e)=> {
 					p.push(transform($(e), 'href'));
 				})
-			
 				$('font').each(async (i, e)=> {
 					p.push(transform($(e), 'url', true));
 					$(e).remove();
@@ -621,9 +621,12 @@ module.exports = (function(){
 		if (options.debug == null) options.debug = mod.config.debug;
 		if (options.debug != false) stream = stream.pipe(debug())
 
-		libx._.each(middlewares(), i=>
-			stream = stream.pipe(i)
-		);
+		libx._.each(middlewares(), i=> {
+			stream = stream.pipe(i);
+			return stream;
+		});
+
+		// stream.pipe(gulp.series(middlewares()));
 
 		stream.pipe(gulp.dest(dest)).on('end', ()=> {
 			p.resolve(stream);
@@ -700,7 +703,7 @@ module.exports = (function(){
 		if ((<any>options).useSourceDir) {
 			cbk = libx.throttle(cbkWrapper, options.throttle, false);
 		}
-		gulp.watch(source,  options).on('all', cbk);
+		gulp.watch(source,  options).on('all', <any>cbk);
 		// gulp.watch(source,  options).on('all', async (eventName, _path, stats)=>{
 		// 	_path = path.relative(dir, _path);
 		// 	if (callback) callback({ type: eventName, path: _path }, _path, stats);
