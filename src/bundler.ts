@@ -493,7 +493,7 @@ module.exports = (function(){
 					} catch(err) {
 						throw 'Write: error: ' + err;
 					}
-					func();
+						func();
 				}
 				
 				if (isNetworkResource) {
@@ -621,12 +621,9 @@ module.exports = (function(){
 		if (options.debug == null) options.debug = mod.config.debug;
 		if (options.debug != false) stream = stream.pipe(debug())
 
-		libx._.each(middlewares(), i=> {
-			stream = stream.pipe(i);
-			return stream;
-		});
-
-		// stream.pipe(gulp.series(middlewares()));
+		libx._.each(middlewares(), i=>
+			stream = stream.pipe(i)
+		);
 
 		stream.pipe(gulp.dest(dest)).on('end', ()=> {
 			p.resolve(stream);
