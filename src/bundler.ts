@@ -2,9 +2,9 @@ import { LibxJS } from 'libx.js';
 
 const libx: LibxJS.ILibxJS = require('libx.js/bundles/essentials');
 
-// libx.di.modules.crypto = require('libx.js/modules/crypto');
+libx.di.modules.crypto = require('libx.js/modules/crypto');
+libx.di.modules.network = require('libx.js/modules/network');
 libx.node = libx.di.get('node') || require('libx.js/node');
-require('libx.js/modules/network');
 
 // import * as gulp from 'gulp';
 import gulp from 'gulp';
