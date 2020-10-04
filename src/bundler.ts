@@ -1,7 +1,7 @@
-declare var __libx: LibxJS.ILibxJS;
-// libx = __libx;
-// import libx from 'libx.js/bundles/essentials';
-const libx: LibxJS.ILibxJS = __libx || require('libx.js/bundles/essentials')
+import { LibxJS } from 'libx.js';
+
+const libx: LibxJS.ILibxJS = require('libx.js/bundles/essentials');
+
 // libx.di.modules.crypto = require('libx.js/modules/crypto');
 libx.node = libx.di.get('node') || require('libx.js/node');
 require('libx.js/modules/network');

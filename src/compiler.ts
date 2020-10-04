@@ -1,4 +1,6 @@
-libx = <LibxJS.ILibxJS>require('libx.js/bundles/essentials');
+import { LibxJS } from 'libx.js';
+
+const libx = <LibxJS.ILibxJS>require('libx.js/bundles/essentials');
 libx.node = require('libx.js/node');
 libx.pax = require('./bundler');
 

@@ -1,7 +1,9 @@
+import { LibxJS } from "libx.js";
+
 module.exports = (function(){
 	// Include libx.js essentials in the outputted file as global (=window) variable:
 	// (<any>global)._libx_avoidExtensions = true; // comment out if those extensions interfere with other libraries and uncomment the 'libx.extensions.apply*' commands bellow
-	const libx = require('libx.js/bundles/browser.essentials');
+	const libx: LibxJS.ILibxJS = require('libx.js/bundles/browser.essentials');
 
 	(<any>global).libx = libx;
 
