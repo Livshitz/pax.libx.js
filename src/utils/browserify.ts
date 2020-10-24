@@ -1,8 +1,12 @@
 // Usage `$ node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y`
 
-import * as libx from 'libx.js/bundles/essentials';
-libx.pax = require("../index");
-libx.node = require("libx.js/node");
+import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
+
+const libx = { 
+	...libxEssentials, 
+	pax: require("../index"),
+};
+
 import * as path from 'path';
 
 

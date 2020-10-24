@@ -1,8 +1,10 @@
-import { LibxJS } from 'libx.js';
 
-const libx = <LibxJS.ILibxJS>require('libx.js/bundles/essentials');
-libx.node = require('libx.js/node');
-libx.pax = require('./bundler');
+import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
+
+const libx = { 
+	...libxEssentials, 
+	pax: require("./index"),
+};
 
 libx.log.isShowStacktrace = false;
 

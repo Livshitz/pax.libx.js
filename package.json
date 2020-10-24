@@ -13,7 +13,8 @@
 		"test": "jest --detectOpenHandles --runInBand",
 		"test:ci": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura --coverageReporters=html",
 		"build:browserify:example": "node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y --minify  && du -sh .tmp/example/main.min.js",
-		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\""
+		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\"",
+		"utils-browserify": "node src/utils/browserify.js"
 	},
 	"files": [
 		"./src",
@@ -66,7 +67,7 @@
 		"jest": "^26.4.2",
 		"less": "^3.12.2",
 		"less-plugin-sass2less": "^1.2.0",
-		"libx.js": "^0.6.23",
+		"libx.js": "^1.0.8",
 		"node-sass": "^4.14.1",
 		"pug": "^3.0.0",
 		"readable-stream": "^3.6.0",

@@ -1,10 +1,9 @@
-import { LibxJS } from 'libx.js';
+import { libx } from 'libx.js/src/bundles/node.essentials';
+import { Crypto } from 'libx.js/src/modules/crypto';
+import { network } from 'libx.js/src/modules/network';
 
-const libx: LibxJS.ILibxJS = require('libx.js/bundles/essentials');
-
-libx.di.modules.crypto = require('libx.js/modules/crypto');
-libx.di.modules.network = require('libx.js/modules/network');
-libx.node = libx.di.get('node') || require('libx.js/node');
+libx.di.register(Crypto, 'crypto');
+libx.di.register(network, 'network');
 
 // import * as gulp from 'gulp';
 import gulp from 'gulp';
@@ -32,7 +31,7 @@ const vinyl = require('vinyl')
 // middleweres
 const minify = require("gulp-babel-minify");
 const rename = require('gulp-rename');
-const pug = require('pug');
+import pug from 'pug';
 const less = require('less');
 const jade = require('gulp-pug');
 const gulpless = require('gulp-less');
@@ -105,7 +104,7 @@ module.exports = (function(){
 
 	//#region middlewares: 
 	mod.middlewares = {};
-	mod.middlewares.minify = (options) => streamify(minify(libx.extend({ mangle: false, builtIns: false }, options)));
+	mod.middlewares.minify = (options) => streamify(minify(libx.merge({ mangle: false, builtIns: false }, options)));
 	mod.middlewares.renameFunc = (func) => rename(func);
 	mod.middlewares.rename = (to) => rename(to);
 	mod.middlewares.babelify = () => gulpBabel({ presets: ['@babel/preset-env'] });
@@ -141,7 +140,7 @@ module.exports = (function(){
 	};
 	mod.middlewares.pug = (locals) => {
 		return jade({
-			locals: libx.extend(locals || {}, { config: mod.projconfig }),
+			locals: libx.merge(locals || {}, { config: mod.projconfig }),
 			// pretty: mod.config.isProd,
 		})
 	};
@@ -157,7 +156,7 @@ module.exports = (function(){
 		
 		if (parsed.script != null && (parsed.script.attrs.lang == 'ts')) {
 			const compiled = typescript.transpileModule(script, { 
-				compilerOptions: libx.extend({ 
+				compilerOptions: libx.merge({ 
 					target: typescript.ScriptTarget.ES2015, 
 					module: typescript.ModuleKind.ES2020, 
 					moduleResolution: typescript.ModuleResolutionKind.NodeJs,
@@ -281,7 +280,7 @@ module.exports = (function(){
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
 		};
-		libx.extend(options, _options);
+		libx.merge(options, _options);
 
 		// outFile forces the use of 'system' or 'amd'
 		if (options.outFile != null) {
@@ -296,7 +295,7 @@ module.exports = (function(){
 			module: 'commonjs', // 'commonjs', 'amd', 'umd', 'system'.
             // outFile: 'compiled.js',
 		};
-		libx.extend(options, _options);
+		libx.merge(options, _options);
 		if (options.outFile != null) options.module = "amd";
 
 		return through2.obj(async function(file, encoding, callback) {
@@ -358,7 +357,7 @@ module.exports = (function(){
 				return chunk;
 			}
 		};
-		libx.extend(options, _options);
+		libx.merge(options, _options);
 		
 		return mod.middlewares.browserify(options); 
 	}
@@ -409,7 +408,7 @@ module.exports = (function(){
 		// 	options.plumber = true;
 		// 	options.minify = false;
 		// }
-		libx.extend(true, options, _options);
+		libx.merge(true, options, _options);
 
 		// options.treatChunk = (chunk, options)=>{
 		// 	chunk.contents.pipe(source(chunk.path, chunk.base))
@@ -597,11 +596,11 @@ module.exports = (function(){
 		var p = libx.newPromise();
 
 		var options: any = { allowEmpty: true }; // base: mod.config.workdir };
-		libx.extend(options, _options);
+		libx.merge(options, _options);
 
 		// if '_source' contains 
 		if (options.base == null) {
-			if (!libx._.isArray(_source)) _source = [_source];
+			if (!libx.isArray(_source)) _source = [_source];
 			var src = libx._.map(_source, i=> {
 				var m = i.match(/(.+?)\/\*/)
 				if (m == null || m.length <= 1) return;
@@ -663,7 +662,7 @@ module.exports = (function(){
 		if (middlewares != null && typeof middlewares != 'function') throw 'middlewares arguments must be an initializator (function)!'
 		
 		var options: any =  {}; //{ base: path.relative(__dirname, path.dirname(source)) }; 
-		libx.extend(options, _options);
+		libx.merge(options, _options);
 
 		libx.log.verbose('pax.watch: Starting to watch "%s"', source);
 		mod.watchSimple(source, async(ev, p)=> {
@@ -690,7 +689,7 @@ module.exports = (function(){
 		}
 		
 		var options = { cwd: dir, throttle: 0 };
-		options = libx.extend(options, _options); // {cwd: './'}
+		options = libx.merge(options, _options); // {cwd: './'}
 
 		const cbkWrapper = (eventName, _path, stats)=> {
 			_path = path.relative(dir, _path);
@@ -739,7 +738,7 @@ module.exports = (function(){
 				// })
 			],
 		};
-		opts = libx.extend({}, opts, options);
+		opts = libx.merge({}, opts, options);
 
 		if (watchPath != null) {
 

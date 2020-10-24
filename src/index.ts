@@ -1,4 +1,4 @@
-const libx = require('libx.js');
+import { libx } from 'libx.js/src/bundles/node.essentials';
 let bundler = require('./bundler'); 
 
 export default module.exports = bundler;
