@@ -15,6 +15,7 @@ build/
 yarn.lock
 .tmp/
 
+junit.xml
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts

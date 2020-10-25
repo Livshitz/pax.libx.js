@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Usage `$ node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y`
 
 import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
@@ -25,8 +27,10 @@ import * as path from 'path';
 
     console.log('pax:utils:browserify: ', { mainJS, dest, basename: filename });
 
-	if (libx.node.args.y == null && await libx.node.prompts.confirm(`We're going to delete "${dest}", ok?`) != true) return;
-	await libx.pax.delete(dest);
+	if (libx.node.args.noDelete != true) {
+		if (libx.node.args.y == null && await libx.node.prompts.confirm(`We're going to delete "${dest}", ok?`) != true) return;
+		await libx.pax.delete(dest);
+	}
 
 	// const tsconfig = libx.pax.ts.createProject(__dirname + '/../../tsconfig.browser.json');
 	// let tsOptions = {
