@@ -1,5 +1,5 @@
 import { libx } from 'libx.js/src/bundles/node.essentials';
-import { Crypto } from 'libx.js/src/modules/crypto';
+import { SHA1, Crypto } from 'libx.js/src/modules/crypto';
 import { network } from 'libx.js/src/modules/network';
 
 libx.di.register(Crypto, 'crypto');
@@ -463,7 +463,7 @@ module.exports = (function(){
 			var ext = m[3];
 			var isRemote = src.match(/^(.+:)?\/\/|http/g) != null
 			// if (!isRemote) return;
-			var h = libx.di.modules.crypto.lib.SHA1(src).toString();
+			var h = SHA1(src).toString();
 			var p = (libCacheDir || './') + 'lib-cache/' + (avoidRenameFile ? dir : '');
 			// var fname = avoidRenameFile ? `${name}${ext}` : `${h}${ext}`;
 			var fname = `${name}${ext}`;
