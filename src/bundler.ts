@@ -1,6 +1,6 @@
 import { libx } from 'libx.js/build/bundles/node.essentials';
-import { SHA1, Crypto } from 'libx.js/build/modules/crypto';
-import { network } from 'libx.js/build/modules/network';
+import { SHA1, Crypto } from 'libx.js/build/modules/Crypto';
+import { network } from 'libx.js/build/modules/Network';
 
 libx.di.register(Crypto, 'crypto');
 libx.di.register(network, 'network');
