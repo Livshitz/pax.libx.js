@@ -16,7 +16,7 @@
 		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\""
 	},
 	"bin": {
-		"pax-browserify": "src/utils/browserify.js"
+		"pax-browserify": "build/utils/browserify.js"
 	},
 	"files": [
 		"./src",
