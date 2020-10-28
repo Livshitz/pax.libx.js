@@ -4,7 +4,7 @@
 // import * as _libx from 'libx.js/bundles/essentials';
 // var libx: LibxJS.ILibxJS = _libx;
 
-import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
+import { libx as libxEssentials } from 'libx.js/build/bundles/node.essentials';
 
 const libx = { 
 	...libxEssentials, 

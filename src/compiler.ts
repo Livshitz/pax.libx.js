@@ -1,5 +1,5 @@
 
-import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
+import { libx as libxEssentials } from 'libx.js/build/bundles/node.essentials';
 
 const libx = { 
 	...libxEssentials, 

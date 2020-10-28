@@ -1,6 +1,6 @@
-import { libx } from 'libx.js/src/bundles/node.essentials';
-import { SHA1, Crypto } from 'libx.js/src/modules/crypto';
-import { network } from 'libx.js/src/modules/network';
+import { libx } from 'libx.js/build/bundles/node.essentials';
+import { SHA1, Crypto } from 'libx.js/build/modules/crypto';
+import { network } from 'libx.js/build/modules/network';
 
 libx.di.register(Crypto, 'crypto');
 libx.di.register(network, 'network');
@@ -601,7 +601,7 @@ module.exports = (function(){
 		// if '_source' contains 
 		if (options.base == null) {
 			if (!libx.isArray(_source)) _source = [_source];
-			var src = libx._.map(_source, i=> {
+			var src: any = libx._.map(_source, i=> {
 				var m = i.match(/(.+?)\/\*/)
 				if (m == null || m.length <= 1) return;
 				return m[1];

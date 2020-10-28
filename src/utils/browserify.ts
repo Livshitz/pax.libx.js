@@ -2,7 +2,7 @@
 
 // Usage `$ node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y`
 
-import { libx as libxEssentials } from 'libx.js/src/bundles/node.essentials';
+import { libx as libxEssentials } from 'libx.js/build/bundles/node.essentials';
 
 const libx = { 
 	...libxEssentials, 
