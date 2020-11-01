@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+// Usage `$ node build/utils/secrets.js --[lock|unlock|empty] [--folder="pathToFolderContainingProjectJson"]`
+
 import { libx } from 'libx.js/build/bundles/node.essentials';
 import path from 'path';
 import fs from 'fs';
