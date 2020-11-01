@@ -16,7 +16,8 @@
 		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\""
 	},
 	"bin": {
-		"pax-browserify": "build/utils/browserify.js"
+		"pax-browserify": "build/utils/browserify.js",
+		"pax-secrets": "build/utils/secrets.js"
 	},
 	"files": [
 		"./src",
@@ -69,8 +70,8 @@
 		"jest": "^26.6.1",
 		"less": "^3.12.2",
 		"less-plugin-sass2less": "^1.2.0",
-		"libx.js": "^1.0.9",
-		"node-sass": "^4.14.1",
+		"libx.js": "^1.1.1",
+		"node-sass": "^5.0.0",
 		"pug": "^3.0.0",
 		"readable-stream": "^3.6.0",
 		"through": "^2.3.8",
