@@ -1,5 +1,5 @@
 import { libx } from 'libx.js/build/bundles/node.essentials';
-let bundler = require('./bundler'); 
+import bundler from "./bundler";
 
 export default module.exports = bundler;
 

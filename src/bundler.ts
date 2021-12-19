@@ -2,8 +2,8 @@ import { libx } from 'libx.js/build/bundles/node.essentials';
 import { SHA1, Crypto } from 'libx.js/build/modules/Crypto';
 import { network } from 'libx.js/build/modules/Network';
 
-libx.di.register(Crypto, 'crypto');
-libx.di.register(network, 'network');
+if (libx.di.modules['Crypto'] == null) libx.di.register('Crypto', Crypto);
+if (libx.di.modules['network'] == null) libx.di.register('network', network);
 
 // import * as gulp from 'gulp';
 import gulp from 'gulp';
@@ -496,7 +496,7 @@ module.exports = (function(){
 				}
 				
 				if (isNetworkResource) {
-					const data = await libx.di.modules.network.httpGet(src, { dataType: '' });
+					const data = await libx.di.modules.get('network').httpGet(src, { dataType: '' });
 					handler(data);
 				} else {
 					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
@@ -791,3 +791,5 @@ module.exports = (function(){
 
 	return mod;
 })();
+
+export default module.exports;
