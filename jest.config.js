@@ -4,8 +4,10 @@ module.exports = {
 	],
 	transform: {
 		"^.+\\.jsx?$": "babel-jest",
-	  	"^.+\\.ts?$": "ts-jest"
+	  	"^.+\\.ts?$": "ts-jest",
+
 	},
+	testEnvironment: "node",
 	testRegex: "(/__tests__/.*|/tests/.*(\\.|/)(test|spec))\\.ts$",
 	moduleFileExtensions: [
 	  "ts",
@@ -19,6 +21,12 @@ module.exports = {
 	reporters: [ "default", "jest-junit" ],
 	coverageDirectory: ".tmp/coverage",
 	transformIgnorePatterns: [
-		"<rootDir>/node_modules/(?!libx\.js/.*)"
+		"<rootDir>/node_modules/(?!libx\.js/.*)",
 	],
+
+	coverageReporters: [
+		"cobertura",
+		"html"
+	]
+
 }

@@ -66,7 +66,7 @@
 		"gulp-uglify": "^3.0.2",
 		"gulp-usemin": "^0.3.30",
 		"gulp-watch": "^5.0.1",
-		"into-stream": "^7.0.0",
+		"into-stream": "6",
 		"jest": "^27.4.5",
 		"less": "^4.1.2",
 		"less-plugin-sass2less": "^1.2.0",
@@ -100,12 +100,6 @@
 	"devDependencies": {
 		"jest-junit": "^13.0.0",
 		"jest-junit-reporter": "^1.1.0"
-	},
-	"jest": {
-		"coverageReporters": [
-			"cobertura",
-			"html"
-		]
 	},
 	"jest-junit": {
 		"suiteName": "jest tests",
