@@ -1,9 +1,8 @@
-import { LibxJS } from "libx.js";
+import { libx } from "libx.js/build/bundles/browser.essentials";
 
 module.exports = (function(){
 	// Include libx.js essentials in the outputted file as global (=window) variable:
 	// (<any>global)._libx_avoidExtensions = true; // comment out if those extensions interfere with other libraries and uncomment the 'libx.extensions.apply*' commands bellow
-	const libx: LibxJS.ILibxJS = require('libx.js/bundles/browser.essentials');
 
 	(<any>global).libx = libx;
 
@@ -28,7 +27,7 @@ module.exports = (function(){
 	});
 
 	// Example how to require DI for specific modules (note: if one of the dependencies is not yet available it'll become pending func):
-	libx.di.require((log, network, activityLog, myModule) => {
+	libx.di.inject((log, network, activityLog, myModule) => {
 		log.isDebug = false;
 		log.debug('net: ', network, activityLog)
 	});
