@@ -13,7 +13,7 @@
 		"test": "jest --detectOpenHandles --runInBand",
 		"test:ci": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura --coverageReporters=html",
 		"build:browserify:example": "node build/utils/browserify.js ./examples/src/main.ts ./.tmp/example -y --minify  && du -sh .tmp/example/main.min.js",
-		"bump": "yarn version --patch && git push --tags && yarn publish . --tag latest && git push && echo \"Successfully released version $npm_package_version!\""
+		"bump": "./bump.sh"
 	},
 	"bin": {
 		"pax-browserify": "build/utils/browserify.js",
