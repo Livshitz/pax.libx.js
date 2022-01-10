@@ -504,7 +504,7 @@ module.exports = (function(){
 				}
 				
 				if (isNetworkResource) {
-					const data = await libx.di.modules.get('network').httpGet(src, { dataType: '' });
+					const data = await libx.di.get('network').httpGet(src, { dataType: '' });
 					handler(data);
 				} else {
 					libx.log.v('pax.localize: getting local: ', src, ext, h, dir);
