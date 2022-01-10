@@ -1,6 +1,6 @@
 {
 	"name": "pax.libx.js",
-	"version": "0.5.2",
+	"version": "0.6.0",
 	"description": "Flexible web assets packing and bundling library",
 	"repository": "https://github.com/Livshitz/pax.libx.js",
 	"author": "Eli Livshitz",
@@ -74,6 +74,8 @@
 		"node-sass": "^7.0.0",
 		"pug": "^3.0.2",
 		"readable-stream": "^3.6.0",
+		"sass": "^1.45.1",
+		"showdown": "^1.9.1",
 		"through": "^2.3.8",
 		"through2": "^4.0.2",
 		"ts-jest": "^27.1.2",

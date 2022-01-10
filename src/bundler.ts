@@ -1,6 +1,7 @@
 import { libx } from 'libx.js/build/bundles/node.essentials';
 import { SHA1, Crypto } from 'libx.js/build/modules/Crypto';
 import { network } from 'libx.js/build/modules/Network';
+import showdown from 'showdown';
 
 if (libx.di.modules['Crypto'] == null) libx.di.register('Crypto', Crypto);
 if (libx.di.modules['network'] == null) libx.di.register('network', network);
@@ -35,7 +36,7 @@ import pug from 'pug';
 const less = require('less');
 const jade = require('gulp-pug');
 const gulpless = require('gulp-less');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const nodeSass = require('node-sass');
 const sass2less = require('less-plugin-sass2less')
 const less2sass = require('gulp-less2sass')
@@ -95,6 +96,9 @@ module.exports = (function(){
 		var args = new Array(arguments).slice(1);
 		fun.call(args);
 	}
+
+	mod.showdown = showdown;
+	mod.showdownConverter = new showdown.Converter();
 
 	mod.ts = ts;
 
@@ -184,7 +188,11 @@ module.exports = (function(){
 		}
 
 		if (parsed.template != null && (parsed.template.attrs.lang == 'pug' || parsed.template.attrs.lang == 'jade')) {
-			template = pug.compile(template)({});
+			template = pug.compile(template,{
+				filters: {
+					markdown: (s: string) => mod.showdownConverter.makeHtml(s)
+				}
+			})({});
 		}
 	
 		if (style != null && style != ''){
