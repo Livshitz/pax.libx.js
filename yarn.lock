@@ -6687,10 +6687,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^2.15.2:
-  version "2.17.2"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.17.2.tgz#ac826f85774ea422c9b42e18f42d7bb4ee689d56"
-  integrity sha512-f4DD8n6F9b395kiwT0J3exllbMZnc6skEyzXblgtagbgfzQkYwI7ZkvBzPLAU2u7T+kNjNtRtQbJNrU0g1o3fQ==
+libx.js@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.19.0.tgz#193e4ac051b8d3cb2ef8e059cafe70f088dacde7"
+  integrity sha512-lJH2eNIk4XxYcqAP6ETtGCFX2+FzJ6fnbDrYzgYMhB4+MICjNTydqVYVZ8cY7XiMhBEOLx2IsKoJ1eOHUbLWEg==
   dependencies:
     axios "^0.21.3"
     concurrency.libx.js "^1.0.1"
