@@ -3637,13 +3637,13 @@ detective@^5.2.0:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-di.libx.js@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/di.libx.js/-/di.libx.js-2.1.1.tgz#1dc502c5be6299bd02f655e780db451d36931c09"
-  integrity sha512-PdUsUMvtlTJNrpyitLhwB6KW63Ms9vpqvfzyA56m7Y0fFXdgioqEi907muvvRF3RI9Rrl5Oj3M5X+zcEum8tAA==
+di.libx.js@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/di.libx.js/-/di.libx.js-2.2.0.tgz#ba8a81ccbeffafce30f9cdfca6a19a8e4e1ad822"
+  integrity sha512-3Jnyj4CPBaS1wG6DbAEloSlFgiJkldZHA9Vi6bcyo8KT92+aPgm+yR+9FjbMDjDuJ05+2c/AI052ja/9T6E9Aw==
   dependencies:
     concurrency.libx.js "^0.2.23"
-    typescript "^3.9.3"
+    typescript "^4.5.4"
 
 diff-sequences@^27.4.0:
   version "27.4.0"
@@ -6687,17 +6687,17 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libx.js@^2.19.0:
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.19.0.tgz#193e4ac051b8d3cb2ef8e059cafe70f088dacde7"
-  integrity sha512-lJH2eNIk4XxYcqAP6ETtGCFX2+FzJ6fnbDrYzgYMhB4+MICjNTydqVYVZ8cY7XiMhBEOLx2IsKoJ1eOHUbLWEg==
+libx.js@^2.19.1:
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.19.1.tgz#2ac066f0ebbaa76186563e2bcdccaedb0a4f4b80"
+  integrity sha512-pp4UpT13Ar5une+1Lk8oWOj95C0JbLQ5EeLRjEAFwAyoPR39gNVq8KWbcJVHWrl3o0WYJ9A8wnTu6FSecJONsg==
   dependencies:
     axios "^0.21.3"
     concurrency.libx.js "^1.0.1"
     cors "^2.8.5"
     crypto-js "^4.0.0"
     detect.js "^2.2.3"
-    di.libx.js "^2.1.1"
+    di.libx.js "^2.2.0"
     form-data "^4.0.0"
     glob "^7.2.0"
     json-bump "^1.0.2"
@@ -9795,11 +9795,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typescript@^3.9.3:
-  version "3.9.10"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
-  integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
 typescript@^4.5.4:
   version "4.5.4"
