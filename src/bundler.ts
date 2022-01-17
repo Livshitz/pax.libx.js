@@ -207,7 +207,7 @@ module.exports = (function(){
 			let hash = componentName.hashCode();
 			if (parsed.styles[0].attrs.scoped == true) {
 				template = template.replace(/>/, ` data-${hash}>`);
-				let style1 = style.replace(/(.*){/g, ` [data-${hash}] $1 {`);
+				let style1 = style.replace(/(.*)(?<!.*@media screen.*){/g, ` [data-${hash}] $1 {`);
 				let style2 = style.replace(/(\S*)\s*{/g, `$1[data-${hash}] {`);
 				style = style1 + '\n' + style2;
 			}
