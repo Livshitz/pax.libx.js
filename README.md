@@ -30,7 +30,8 @@ or
 > npm: npm install --save pax.libx.js
 
 ## Commands:
-> $ npx -p pax.libx.js pax-browserify src/browser.ts dist -y --minify && du -sh dist/
+> $ npx -p pax.libx.js pax-browserify src/browser.ts dist -y --minify && du -sh dist/  
+
 > $ yarn pax-secrets --lock --folder='/./'
 
 ## Contributing
