@@ -29,6 +29,10 @@ See examples [here](examples/browserify.js)
 or   
 > npm: npm install --save pax.libx.js
 
+## Commands:
+> $ npx -p pax.libx.js pax-browserify src/browser.ts dist -y --minify && du -sh dist/
+> $ yarn pax-secrets --lock --folder='/./'
+
 ## Contributing
 
 Fork into your own repo, run locally, make changes and submit PullRequests to the main repository.
