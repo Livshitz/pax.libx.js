@@ -636,7 +636,9 @@ module.exports = (function(){
 			p.resolve(stream);
 			if (options.callback) options.callback(stream);
 		});
-		stream.on('error', (err) => libx.log.error('pax.copy: --- ERROR: --- ', err) );
+		stream.on('error', (err) => {
+			libx.log.error('pax.copy: --- ERROR: --- ', { message: err.message, stack: err.stack });
+		});
 
 		shouldWatch = shouldWatch || false;
 		if (Array.isArray(_source)) _source = libx._.map(_source, i=> i.replace(/^(\!)?\.\//, '$1'));
