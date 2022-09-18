@@ -3234,10 +3234,10 @@ concurrency.libx.js@^0.2.23:
   resolved "https://registry.yarnpkg.com/concurrency.libx.js/-/concurrency.libx.js-0.2.25.tgz#045735b83cf0405bc05bcbcf791cb9f79d56b79b"
   integrity sha512-aYvgorK8d6hoWgkWdyy8vc+hiGQbMTJllewe0fpdn8pt9Bg9AZNwSbdcFPfwZoh73vnHFX8wfULxS693aT7jEA==
 
-concurrency.libx.js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/concurrency.libx.js/-/concurrency.libx.js-1.0.1.tgz#5bd390dda8da115eb86b84fe1e4d8f93bff4a464"
-  integrity sha512-oJv7/Q8aRGj5clb/PYmPDkNQTOOAicf5LOyoUJG6bDFBNfTChi9F7D2mnVTSJOn0yqN75euaJcdxJqugVyCxpg==
+concurrency.libx.js@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/concurrency.libx.js/-/concurrency.libx.js-1.1.1.tgz#7a4d4513c1107c2842d2449679b0264f7599426e"
+  integrity sha512-8+Ohem4/xqmY+lUlmnJuE0B9imrShb/AGiK0eFPj0FxhnOuYgxeTsNj3Xx9fA5fq1FUs7VGmPqwjH7fmu/mU2A==
 
 connect-livereload@^0.6.0:
   version "0.6.1"
@@ -6565,13 +6565,13 @@ leven@^3.1.0:
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
   integrity sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==
 
-libx.js@^2.28.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.28.0.tgz#90df676263e1c4e6ef416e6c99f2925a62e23536"
-  integrity sha512-B3Fu1Or+XB6cv0eXy17K8mfmDBYeGOIZsudYM21kPH79iIw5SteJeiZTdKRid+LErk+uQ98Ceg6ExMP27YRo1g==
+libx.js@^2.31.1:
+  version "2.31.1"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.31.1.tgz#1d016089c40c7a6ae3adc916b99e21855c7e52a2"
+  integrity sha512-ini/p3iZM4wLnP9uaXPdJxVcYjPEnuVflwZf8RZ47Txql5iKQdTK0nYP9256tUh3CkZGi501HUbcSrTU+acbXg==
   dependencies:
     axios "^0.21.3"
-    concurrency.libx.js "^1.0.1"
+    concurrency.libx.js "^1.1.1"
     cors "^2.8.5"
     crypto-js "^4.0.0"
     detect.js "^2.2.3"
