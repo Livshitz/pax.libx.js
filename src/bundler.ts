@@ -39,7 +39,7 @@ const less = require('less')
 const jade = require('gulp-pug')
 const gulpless = require('gulp-less')
 const sass = require('gulp-sass')(require('sass'))
-const nodeSass = require('node-sass')
+const nodeSass = require('node-sass');
 const sass2less = require('less-plugin-sass2less')
 const less2sass = require('gulp-less2sass')
 const gulpBabel = require('gulp-babel')
@@ -141,9 +141,17 @@ module.exports = (function () {
     })
   }
   mod.middlewares.sass = () => {
+    const importer = (url, prev, done) => {
+      if (url[0] === '~') {
+        url = path.resolve('node_modules', url.substr(1));
+      }
+    
+      return { file: url };
+    }
     return sass({
-      paths: [path.join(__dirname, 'scss', 'includes')],
+      paths: [path.join(__dirname, 'scss', 'includes'), ''],
       plugins: [],
+      importer,
     })
   }
   mod.middlewares.less2sass = () => {
@@ -156,9 +164,6 @@ module.exports = (function () {
     })
   }
   mod.middlewares.vue = (content, file, stylesFile, compilerOptions = {}) => {
-    // const oldCWD = process.cwd()
-    // process.chdir(file.dirname)
-
     let options = {
       whitespace: 'condense',
     }
@@ -221,8 +226,14 @@ module.exports = (function () {
         ) {
           style = nodeSass.renderSync({ data: style }).css.toString()
         } else if (parsed.styles[0].attrs.lang == 'less') {
+          const oldCWD = process.cwd()
+          process.chdir(file.dirname)  
+
           style = less.renderSync(style)
+
+          process.chdir(oldCWD)
         }
+
       } catch (err) {
         throw new Exception(
           `bundler:vue:styles: Failed to render style. File: "${file.path}"`,
@@ -291,8 +302,6 @@ module.exports = (function () {
       /\s*?export default ?\{/,
       '\nexports = {',
     )
-
-    // process.chdir(oldCWD)
 
     return scriptWithTemplate
   }
