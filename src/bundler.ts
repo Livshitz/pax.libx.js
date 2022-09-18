@@ -527,7 +527,12 @@ module.exports = (function () {
       var m = src.match(
         /(?:\/\/.+?\/|\.\.\/|\.\/)(.*)\/.*?([^\/]+)(\.[^\.\/\?]+).*$/,
       )
-      if (m == null || m.length == 1) return
+      if (m == null && src.startsWith('http')) {
+        var customFileName = e.attr('filename');
+        if (customFileName == null) throw 'localize: url does not include filename and no custom \'filename\' provided! src:' + src;
+        m = ['', customFileName];
+      }
+      if (m == null || m.length == 1) return;
       var dir = dest || m[1] + '/'
       var name = m[2]
       var ext = m[3]
