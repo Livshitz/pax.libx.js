@@ -502,6 +502,9 @@ module.exports = (function () {
           options.entries = chunk.path
         } else content = intoStream(chunk.contents)
 
+        if (options.standalone) {
+          options.standalone = 'browserified_' + libx.randomNumber(10000);
+        }
         bundle = browserify(content, options)
 
         if (options.tsify) bundle.plugin(tsify, options.tsifyOptions) //, { noImplicitAny: false, target: 'es3' })
