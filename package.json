@@ -1,6 +1,6 @@
 {
 	"name": "pax.libx.js",
-	"version": "0.6.17",
+	"version": "0.6.18",
 	"description": "Flexible web assets packing and bundling library",
 	"repository": "https://github.com/Livshitz/pax.libx.js",
 	"author": "Eli Livshitz",
