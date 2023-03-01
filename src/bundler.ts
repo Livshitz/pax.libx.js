@@ -447,7 +447,7 @@ module.exports = (function () {
       babelify: false,
       tsify: false,
       // paths: ['./node_modules', './app/'],
-      standalone: '__libxjs',
+      // standalone: '__libxjs',
       debug: false,
       plumber: false,
       minify: false,
@@ -539,7 +539,8 @@ module.exports = (function () {
       var m = src.match(
         /(?:\/\/.+?\/|\.\.\/|\.\/)(.*)\/.*?([^\/]+)(\.[^\.\/\?]+).*$/,
       )
-      var skip = e.attr('skip')
+      var skip = e.attr('skip');
+      if (skip != null) return;
       if (m == null && src.startsWith('http') && skip == null) {
         var customFileName = e.attr('filename');
         if (customFileName == null) throw 'pax.localize: url does not include filename and no custom \'filename\' provided! src:' + src;
