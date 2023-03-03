@@ -85,7 +85,7 @@
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
 		"vinyl-transform": "^1.0.0",
-		"vue-template-compiler": "2.7.14"
+		"vue-template-compiler": "2.7.10"
 	},
 	"not-in-use-dependencies": {
 		"connect-gzip": "^0.1.6",
