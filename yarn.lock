@@ -6413,10 +6413,10 @@ leven@^3.1.0:
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
   integrity sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==
 
-libx.js@^2.31.1:
-  version "2.34.0"
-  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.34.0.tgz#bebbcfd4235f3a868aabe247f1c67fd37ae078a6"
-  integrity sha512-8TH6mkGVowLzice86JOveWcOG5yEd8018IA856qrpV3rlU1hNyzInESN1GEUMsZLe2og487a1GopAvem0qunzQ==
+libx.js@^2.34.1:
+  version "2.34.1"
+  resolved "https://registry.yarnpkg.com/libx.js/-/libx.js-2.34.1.tgz#4a1ba4c0e3f17c6464bd65e54e98f024eac6c44e"
+  integrity sha512-wof+S7hagmK0zce0QWVUa1qWZKXwpKdbHczZyzi24xieDD9hez6m/J0FFUoYQsMnomy7BA3DoprGF4Ds570s/Q==
   dependencies:
     axios "^0.21.3"
     concurrency.libx.js "^1.1.1"
