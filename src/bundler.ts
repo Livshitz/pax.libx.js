@@ -45,6 +45,7 @@ const less2sass = require('gulp-less2sass')
 const gulpBabel = require('gulp-babel')
 const cleanCss = require('gulp-clean-css')
 const usemin = require('gulp-usemin')
+const useref = require('gulp-useref')
 const htmlmin = require('gulp-htmlmin')
 const templateCache = require('gulp-angular-templatecache')
 const debug = require('gulp-debug')
@@ -335,7 +336,7 @@ module.exports = (function () {
       componentsjs: [minify({ mangle: false })],
       inlinejs: [minify()],
       inlinecss: [cleanCss(), 'concat'],
-    })
+    }).pipe(useref());
   }
   mod.middlewares.template = (name) => {
     return templateCache({
