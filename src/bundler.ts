@@ -312,7 +312,7 @@ module.exports = (function () {
       // assetsDir: './tests/bundle/',
       path: base, //'./tests/bundle/',
       //outputRelativePath: "dist",
-      css: [cleanCss(), 'concat'], // rev()
+      css: [useref(), cleanCss(), 'concat'], // rev()
       html: [() => htmlmin({ collapseWhitespace: true })],
       js: [
         gulpif(
@@ -336,7 +336,7 @@ module.exports = (function () {
       componentsjs: [minify({ mangle: false })],
       inlinejs: [minify()],
       inlinecss: [cleanCss(), 'concat'],
-    }).pipe(useref());
+    }) //.pipe(useref());
   }
   mod.middlewares.template = (name) => {
     return templateCache({
