@@ -29,6 +29,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   registry-url: 'https://registry.npmjs.org'
                   scope: '@octocat'
+            - run: bun install
             - run: bun run build
             - run: bun run test
             - name: bun run bump
