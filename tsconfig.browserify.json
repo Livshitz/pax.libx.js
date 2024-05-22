@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+
+
+		"target": "es2015",
+		"module": "commonjs",
+		"moduleResolution": "Node",
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"inlineSources": true,
+
+		"typeRoots": [
+			"node_modules/@types", 
+			"./types"
+		],
+		"types": [
+			"libx.js",
+			"node"
+		]
+	},
+
+	// "include": [
+		// "./src/**/*.d.ts",
+		// "./src/**/*.ts"
+		// "./src/browser.ts"
+	// ],
+	"exclude": [
+		"node_modules/**/*",
+		"dist",
+		"build",
+		"tests"
+	]
+}

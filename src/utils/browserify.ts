@@ -32,14 +32,28 @@ import * as path from 'path';
 		await libx.pax.delete(dest);
 	}
 
-	// const tsconfig = libx.pax.ts.createProject(__dirname + '/../../tsconfig.browser.json');
-	// let tsOptions = {
-	// 	...tsconfig.config.compilerOptions,
-	// }
+	// const tsconfig = libx.pax.ts.createProject(__dirname + '/../../tsconfig.browserify.json');
+	let tsOptions = {
+		// ...tsconfig.config.compilerOptions,
+		"target": "es2015",
+		"lib": ["ES2016", "DOM", "DOM.Iterable", "ES2015.Promise", "ES2019"],
+		"sourceMap": true,
+		"rootDir": "./",
+		"downlevelIteration": true,
+		
+		// "target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+	}
 	let bundlerOptions = {
 		tsify: true,
-		// tsifyOptions: tsOptions,
-		// target: { node: 'v6.16.0' },
+		tsifyOptions: tsOptions,
+		// target: { node: 'v20' },
 		babelifyOptions: {
 			// global: true,
 			// sourceMaps: false
@@ -47,7 +61,7 @@ import * as path from 'path';
 	};
 
 	let p1 = libx.pax.copy(mainJS, dest, ()=>[
-		// libx.pax.middlewares.ts(tsOptions, tsconfig), //{}, tsconfig),
+		// libx.pax.middlewares.ts(), //{}, tsconfig),
 		libx.pax.middlewares.browserify(bundlerOptions),
 		libx.pax.middlewares.if(shouldMinify, libx.pax.middlewares.minify()),
 		libx.pax.middlewares.renameFunc(p=>{
